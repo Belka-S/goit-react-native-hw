@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { View, Text, Image, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { styles } from './RegistrationScreenStyles';
 
 export const RegistrationScreen = () => {
+  const [isKeyboard, setIsKeyboard] = useState(false);
+
   return (
     <ImageBackground
       style={styles.backgroundImage}
@@ -36,17 +39,23 @@ export const RegistrationScreen = () => {
         <TextInput
           style={[styles.input, styles.mainText]}
           placeholder="Login"
+          onFocus={() => setIsKeyboard(true)}
+          onBlur={() => setIsKeyboard(false)}
         />
         <TextInput
           style={[styles.input, styles.mainText]}
           inputMode="email"
           placeholder="E-mail"
+          onFocus={() => setIsKeyboard(true)}
+          onBlur={() => setIsKeyboard(false)}
         />
         <View style={{ ...styles.passwordWrap, marginBottom: 43 }}>
           <TextInput
             style={{ ...styles.input, ...styles.mainText, marginBottom: 0 }}
             placeholder="Password"
             secureTextEntry={true}
+            onFocus={() => setIsKeyboard(true)}
+            onBlur={() => setIsKeyboard(false)}
           />
           <TouchableOpacity style={styles.passwordBtn}>
             <Text style={styles.mainText}>Show</Text>
@@ -58,7 +67,11 @@ export const RegistrationScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={{ ...styles.button, backgroundColor: 'white' }}
+          style={{
+            ...styles.button,
+            backgroundColor: 'white',
+            marginBottom: isKeyboard ? 0 : 78,
+          }}
         >
           <Text style={styles.mainText}>Have an account? Log In</Text>
         </TouchableOpacity>

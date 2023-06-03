@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
     paddingTop: 32,
     paddingBottom: 78,
     width: '100%',
-    height: '60%',
     position: 'relative',
     borderRadius: 25,
     backgroundColor: 'white',
