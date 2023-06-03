@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, ImageBackground } from 'react-native';
+import { View } from 'react-native';
 import { useFonts } from 'expo-font';
 
 import { RegistrationScreen } from './src/components/RegistrationScreen/RegistrationScreen';
 import { LoginScreen } from './src/components/LoginScreen/LoginScreen';
+import { PostsScreen } from './src/components/PostsScreen/PostsScreen';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -16,22 +17,12 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
-      <RegistrationScreen />
+      {/* <RegistrationScreen /> */}
       {/* <LoginScreen /> */}
+      <PostsScreen />
     </View>
   );
+  r;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  // backgroundImage: {
-  //   width: '100%',
-  //   flex: 1,
-  //   justifyContent: 'flex-end',
-  // },
-});

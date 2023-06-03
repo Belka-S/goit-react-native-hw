@@ -22,13 +22,11 @@ export const styles = StyleSheet.create({
   titleText: {
     marginBottom: 32,
     fontFamily: 'Roboto-Medium',
-    fontWeight: 'medium',
     fontSize: 30,
   },
 
   mainText: {
     fontFamily: 'Roboto-Regular',
-    fontWeight: 'normal',
     fontSize: 16,
     color: '#1B4371',
   },

@@ -1,21 +1,19 @@
-import { View, Text, Image, TextInput } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
+import { TouchableOpacity, ImageBackground } from 'react-native';
 import { styles } from './LoginScreenStyles';
-
-const backgroundImage = require('../../img/background-main-1x.jpg');
 
 export const LoginScreen = () => {
   return (
     <ImageBackground
       style={styles.backgroundImage}
-      source={backgroundImage}
+      source={require('../../img/background-main-1x.jpg')}
       resizeMode="cover"
     >
       <View style={styles.mainContainer}>
         <Text style={styles.titleText}>Log In</Text>
 
         <TextInput
-          style={{ ...styles.input, ...styles.mainText }}
+          style={[styles.input, styles.mainText]}
           inputMode="email"
           placeholder="E-mail"
         />
@@ -23,20 +21,19 @@ export const LoginScreen = () => {
           <TextInput
             style={{ ...styles.input, ...styles.mainText, marginBottom: 0 }}
             placeholder="Password"
-            secureTextEntry="true"
+            secureTextEntry={true}
           />
-          <TouchableOpacity style={styles.passwordBtn} activeOpacity={0.6}>
+          <TouchableOpacity style={styles.passwordBtn}>
             <Text style={styles.mainText}>Show</Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.button} activeOpacity={0.6}>
+        <TouchableOpacity style={styles.button}>
           <Text style={{ ...styles.mainText, color: 'white' }}>Log In</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={{ ...styles.button, backgroundColor: 'white' }}
-          activeOpacity={0.6}
         >
           <Text style={styles.mainText}>Don't have an account? Register</Text>
         </TouchableOpacity>
