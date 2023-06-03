@@ -19,9 +19,9 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
-      {/* <RegistrationScreen /> */}
+      <RegistrationScreen />
       {/* <LoginScreen /> */}
-      <PostsScreen />
+      {/* <PostsScreen /> */}
     </View>
   );
   r;

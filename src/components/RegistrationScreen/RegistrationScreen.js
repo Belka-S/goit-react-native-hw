@@ -1,5 +1,5 @@
-import { View, Text, Image, TextInput } from 'react-native';
-import { ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TextInput, ImageBackground } from 'react-native';
+import { TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { styles } from './RegistrationScreenStyles';
 
 export const RegistrationScreen = () => {
@@ -9,7 +9,10 @@ export const RegistrationScreen = () => {
       source={require('../../img/background-main-1x.jpg')}
       resizeMode="cover"
     >
-      <View style={styles.mainContainer}>
+      <KeyboardAvoidingView
+        style={styles.mainContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <View style={styles.userPhotoContainer}>
           <Image
             style={styles.userPhoto}
@@ -59,7 +62,7 @@ export const RegistrationScreen = () => {
         >
           <Text style={styles.mainText}>Have an account? Log In</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
