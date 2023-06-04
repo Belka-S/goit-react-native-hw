@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { View, Text, Image, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { styles } from './RegistrationScreenStyles';
+import { StyleSheet } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+
+const backgroundImage = require('../../img/background-main-1x.jpg');
+const userPhoto = require('../../img/user.jpg');
 
 export const RegistrationScreen = () => {
   const [isKeyboard, setIsKeyboard] = useState(false);
@@ -9,7 +13,7 @@ export const RegistrationScreen = () => {
   return (
     <ImageBackground
       style={styles.backgroundImage}
-      source={require('../../img/background-main-1x.jpg')}
+      source={backgroundImage}
       resizeMode="cover"
     >
       <KeyboardAvoidingView
@@ -17,21 +21,15 @@ export const RegistrationScreen = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={styles.userPhotoContainer}>
-          <Image
-            style={styles.userPhoto}
-            source={require('../../img/user.jpg')}
-          />
-          {/* <TouchableOpacity style={styles.imageWrap} >
-          <Image style={styles.image} source={require('../../img/plus-orange.png')} />
-        </TouchableOpacity> */}
-          <TouchableOpacity
+          <Image style={styles.userPhoto} source={userPhoto} />
+          <TouchableOpacity style={styles.imageWrap}>
+            <Feather name="plus" size={20} color="#FF6C00" />
+          </TouchableOpacity>
+          {/* <TouchableOpacity
             style={{ ...styles.imageWrap, borderColor: '#E8E8E8' }}
           >
-            <Image
-              style={styles.image}
-              source={require('../../img/cross.png')}
-            />
-          </TouchableOpacity>
+            <Feather name="x" size={20} color="#E8E8E8" />
+          </TouchableOpacity> */}
         </View>
 
         <Text style={styles.titleText}>Registration</Text>
@@ -79,3 +77,91 @@ export const RegistrationScreen = () => {
     </ImageBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  mainContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 92,
+    paddingBottom: 78,
+    width: '100%',
+    position: 'relative',
+    borderRadius: 25,
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
+
+  userPhotoContainer: {
+    width: 120,
+    height: 120,
+    position: 'absolute',
+    top: 0,
+    transform: 'translateY(-60px)',
+    borderRadius: 16,
+    backgroundColor: '#F6F6F6',
+  },
+
+  userPhoto: { width: 120, height: 120, borderRadius: 16 },
+
+  imageWrap: {
+    width: 25,
+    height: 25,
+    position: 'absolute',
+    right: -12.5,
+    bottom: 14,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: '50%',
+    borderColor: '#FF6C00',
+    backgroundColor: 'white',
+  },
+
+  titleText: {
+    marginBottom: 32,
+    fontFamily: 'Roboto-Medium',
+    fontSize: 30,
+  },
+
+  mainText: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    color: '#1B4371',
+  },
+
+  input: {
+    marginBottom: 16,
+    padding: 16,
+    width: '100%',
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: '#E8E8E8',
+  },
+
+  button: {
+    padding: 16,
+    width: '100%',
+    height: 50,
+    alignItems: 'center',
+    borderRadius: '50%',
+    backgroundColor: '#FF6C00',
+  },
+
+  passwordWrap: { width: '100%', position: 'relative' },
+
+  passwordBtn: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: 16,
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: '#E8E8E8',
+  },
+});
