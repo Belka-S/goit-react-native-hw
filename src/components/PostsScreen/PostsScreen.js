@@ -188,6 +188,4 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 0.5,
   },
-
-  addImage: { width: 14, height: 14 },
 });
