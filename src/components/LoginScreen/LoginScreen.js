@@ -16,7 +16,7 @@ export const LoginScreen = () => {
     >
       <KeyboardAvoidingView
         style={styles.mainContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' && 'padding'}
       >
         <Text style={styles.titleText}>Log In</Text>
 
@@ -60,7 +60,6 @@ export const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    width: '100%',
     flex: 1,
     justifyContent: 'flex-end',
   },
@@ -68,10 +67,9 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingHorizontal: 16,
     paddingTop: 32,
-    paddingBottom: 78,
-    width: '100%',
-    position: 'relative',
-    borderRadius: 25,
+    // paddingBottom: 78,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     backgroundColor: 'white',
     alignItems: 'center',
   },
@@ -102,7 +100,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     alignItems: 'center',
-    borderRadius: '50%',
+    borderRadius: 25,
     backgroundColor: '#FF6C00',
   },
 

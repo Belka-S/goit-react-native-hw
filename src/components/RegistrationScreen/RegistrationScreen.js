@@ -18,7 +18,7 @@ export const RegistrationScreen = () => {
     >
       <KeyboardAvoidingView
         style={styles.mainContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' && 'padding'}
       >
         <View style={styles.userPhotoContainer}>
           <Image style={styles.userPhoto} source={userPhoto} />
@@ -68,7 +68,7 @@ export const RegistrationScreen = () => {
           style={{
             ...styles.button,
             backgroundColor: 'white',
-            marginBottom: isKeyboard ? 0 : 78,
+            marginBottom: isKeyboard ? 0 : 50,
           }}
         >
           <Text style={styles.mainText}>Have an account? Log In</Text>
@@ -80,7 +80,6 @@ export const RegistrationScreen = () => {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    width: '100%',
     flex: 1,
     justifyContent: 'flex-end',
   },
@@ -88,10 +87,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingHorizontal: 16,
     paddingTop: 92,
-    paddingBottom: 78,
-    width: '100%',
+    // paddingBottom: 78,
     position: 'relative',
-    borderRadius: 25,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     backgroundColor: 'white',
     alignItems: 'center',
   },
@@ -118,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderRadius: '50%',
+    borderRadius: 12.5,
     borderColor: '#FF6C00',
     backgroundColor: 'white',
   },
@@ -149,7 +148,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     alignItems: 'center',
-    borderRadius: '50%',
+    borderRadius: 25,
     backgroundColor: '#FF6C00',
   },
 

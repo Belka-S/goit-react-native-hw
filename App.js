@@ -20,8 +20,8 @@ export default function App() {
     <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
       {/* <RegistrationScreen /> */}
-      {/* <LoginScreen /> */}
-      <PostsScreen />
+      <LoginScreen />
+      {/* <PostsScreen /> */}
     </View>
   );
   r;

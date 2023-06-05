@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, Image } from 'react-native';
+import { TouchableOpacity, Text, Image, Platform } from 'react-native';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   },
   // Header
   header: {
+    paddingTop: Platform.OS === 'ios' ? 0 : 35,
     paddingHorizontal: 16,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '50%',
+    borderRadius: 25,
     backgroundColor: '#FF6C00',
   },
 
