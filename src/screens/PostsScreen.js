@@ -58,7 +58,7 @@ export const PostsScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.addBtn}>
-          <Feather name="plus" size={20} color="white" />
+          <Feather name="plus" size={20} color="#FFFFFF" />
         </TouchableOpacity>
 
         <TouchableOpacity>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
   },
   // Header
   header: {

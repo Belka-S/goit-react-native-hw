@@ -5,25 +5,24 @@ import { StyleSheet, Keyboard } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
+import { fix } from '../services/constants';
+
 const backgroundImage = require('../img/background-main-1x.jpg');
 const userPhoto = require('../img/user.jpg');
 const initialFormValue = { login: '', email: '', password: '' };
-const initialFormState = {
-  isActiveLogin: false,
-  isActiveEmail: false,
-  isActivePass: false,
-  isHiddenPass: true,
-};
 
 export const RegistrationScreen = () => {
   const [isKeyboard, setIsKeyboard] = useState(false);
   const [formValue, setFormValue] = useState(initialFormValue);
-  const [formState, setFormState] = useState(initialFormState);
+  const [isHidden, setIsHidden] = useState(true);
+  const [onFocus, setOnFocus] = useState('');
 
   const hideKeyboard = () => {
+    console.log(formValue);
+
     Keyboard.dismiss();
     setIsKeyboard(false);
-    console.log(formValue);
+    setOnFocus('');
     setFormValue(initialFormValue);
   };
 
@@ -56,20 +55,16 @@ export const RegistrationScreen = () => {
             style={{
               ...styles.input,
               ...styles.mainText,
-              borderWidth: formState.isActiveLogin ? 1 : 0,
-              backgroundColor: formState.isActiveLogin ? 'white' : '#E8E8E8',
+              borderWidth: onFocus === fix.LOGIN ? 1 : 0,
+              backgroundColor: onFocus === fix.LOGIN ? '#FFFFFF' : '#E8E8E8',
             }}
             textContentType="username"
             placeholder="Login"
             value={formValue.login}
             onFocus={() => {
               setIsKeyboard(true);
-              setFormState(prevState => ({
-                ...prevState,
-                isActiveLogin: true,
-              }));
+              setOnFocus(fix.LOGIN);
             }}
-            onBlur={() => setFormState(initialFormState)}
             onChangeText={value =>
               setFormValue(prevState => ({ ...prevState, login: value }))
             }
@@ -78,8 +73,8 @@ export const RegistrationScreen = () => {
             style={{
               ...styles.input,
               ...styles.mainText,
-              borderWidth: formState.isActiveEmail ? 1 : 0,
-              backgroundColor: formState.isActiveEmail ? 'white' : '#E8E8E8',
+              borderWidth: onFocus === fix.EMAIL ? 1 : 0,
+              backgroundColor: onFocus === fix.EMAIL ? '#FFFFFF' : '#E8E8E8',
             }}
             textContentType="emailAddress"
             value={formValue.email}
@@ -87,12 +82,8 @@ export const RegistrationScreen = () => {
             placeholder="E-mail"
             onFocus={() => {
               setIsKeyboard(true);
-              setFormState(prevState => ({
-                ...prevState,
-                isActiveEmail: true,
-              }));
+              setOnFocus(fix.EMAIL);
             }}
-            onBlur={() => setFormState(initialFormState)}
             onChangeText={value =>
               setFormValue(prevState => ({ ...prevState, email: value }))
             }
@@ -103,54 +94,40 @@ export const RegistrationScreen = () => {
                 ...styles.input,
                 ...styles.mainText,
                 marginBottom: 0,
-                borderWidth: formState.isActivePass ? 1 : 0,
-                backgroundColor: formState.isActivePass ? 'white' : '#E8E8E8',
+                borderWidth: onFocus === fix.PASS ? 1 : 0,
+                backgroundColor: onFocus === fix.PASS ? '#FFFFFF' : '#E8E8E8',
               }}
               textContentType="password"
               value={formValue.password}
               placeholder="Password"
-              secureTextEntry={formState.isHiddenPass}
+              secureTextEntry={isHidden}
               onFocus={() => {
                 setIsKeyboard(true);
-                setFormState(prevState => ({
-                  ...prevState,
-                  isActivePass: true,
-                }));
+                setOnFocus(fix.PASS);
               }}
-              onBlur={() => setFormState(initialFormState)}
               onChangeText={value =>
                 setFormValue(prevState => ({ ...prevState, password: value }))
               }
             />
             <TouchableOpacity
               style={styles.passwordBtn}
-              onPress={() =>
-                setFormState(prevState => ({
-                  ...prevState,
-                  isHiddenPass: !prevState.isHiddenPass,
-                }))
-              }
-              onBlur={() =>
-                setFormState(prevState => ({
-                  ...prevState,
-                  isHiddenPass: true,
-                }))
-              }
+              onPress={() => setIsHidden(prevState => !prevState)}
+              onBlur={() => setIsHidden(true)}
             >
-              <Text style={styles.mainText}>
-                {formState.isHiddenPass ? 'Show' : 'Hide'}
-              </Text>
+              <Text style={styles.mainText}>{isHidden ? 'Show' : 'Hide'}</Text>
             </TouchableOpacity>
           </View>
 
           <TouchableOpacity style={styles.button} onPress={hideKeyboard}>
-            <Text style={{ ...styles.mainText, color: 'white' }}>Register</Text>
+            <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>
+              Register
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={{
               ...styles.button,
-              backgroundColor: 'white',
+              backgroundColor: '#FFFFFF',
               marginBottom: isKeyboard ? 0 : 50,
             }}
           >
@@ -175,7 +152,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
   },
 
@@ -203,7 +180,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12.5,
     borderColor: '#FF6C00',
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
   },
 
   titleText: {
