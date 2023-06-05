@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 
 import { POSTS } from './data';
 
-const userPhoto = require('../../img/user.jpg');
+const userPhoto = require('../img/user.jpg');
 
 export const PostsScreen = () => {
   const [posts, setPosts] = useState(POSTS);
