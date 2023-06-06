@@ -26,81 +26,89 @@ export const LoginScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
-      <ImageBackground
-        style={styles.backgroundImage}
-        source={backgroundImage}
-        resizeMode="cover"
-      >
-        <KeyboardAvoidingView
-          style={styles.mainContainer}
-          behavior={Platform.OS === 'ios' && 'padding'}
+      <View style={{ flex: 1 }}>
+        <ImageBackground
+          style={styles.backgroundImage}
+          source={backgroundImage}
+          resizeMode="cover"
         >
-          <Text style={styles.titleText}>Log In</Text>
+          <KeyboardAvoidingView
+            style={styles.mainContainer}
+            behavior={Platform.OS === 'ios' && 'padding'}
+          >
+            <Text style={styles.titleText}>Log In</Text>
 
-          <TextInput
-            style={{
-              ...styles.input,
-              ...styles.mainText,
-              borderWidth: onFocus === fix.EMAIL ? 1 : 0,
-              backgroundColor: onFocus === fix.EMAIL ? '#FFFFFF' : '#E8E8E8',
-            }}
-            textContentType="emailAddress"
-            value={formValue.email}
-            inputMode="email"
-            placeholder="E-mail"
-            onFocus={() => {
-              setIsKeyboard(true);
-              setOnFocus(fix.EMAIL);
-            }}
-            onChangeText={value =>
-              setFormValue(prevState => ({ ...prevState, email: value }))
-            }
-          />
-          <View style={{ ...styles.passwordWrap, marginBottom: 43 }}>
             <TextInput
               style={{
                 ...styles.input,
                 ...styles.mainText,
-                marginBottom: 0,
-                borderWidth: onFocus === fix.PASS ? 1 : 0,
-                backgroundColor: onFocus === fix.PASS ? '#FFFFFF' : '#E8E8E8',
+                borderWidth: onFocus === fix.EMAIL ? 1 : 0,
+                backgroundColor: onFocus === fix.EMAIL ? '#FFFFFF' : '#E8E8E8',
               }}
-              textContentType="password"
-              value={formValue.password}
-              placeholder="Password"
-              secureTextEntry={isHidden}
+              textContentType="emailAddress"
+              value={formValue.email}
+              inputMode="email"
+              placeholder="E-mail"
               onFocus={() => {
                 setIsKeyboard(true);
-                setOnFocus(fix.PASS);
+                setOnFocus(fix.EMAIL);
               }}
               onChangeText={value =>
-                setFormValue(prevState => ({ ...prevState, password: value }))
+                setFormValue(prevState => ({ ...prevState, email: value }))
               }
             />
-            <TouchableOpacity
-              style={styles.passwordBtn}
-              onPress={() => setIsHidden(prevState => !prevState)}
-              onBlur={() => setIsHidden(true)}
-            >
-              <Text style={styles.mainText}>{isHidden ? 'Show' : 'Hide'}</Text>
+            <View style={{ ...styles.passwordWrap, marginBottom: 43 }}>
+              <TextInput
+                style={{
+                  ...styles.input,
+                  ...styles.mainText,
+                  marginBottom: 0,
+                  borderWidth: onFocus === fix.PASS ? 1 : 0,
+                  backgroundColor: onFocus === fix.PASS ? '#FFFFFF' : '#E8E8E8',
+                }}
+                textContentType="password"
+                value={formValue.password}
+                placeholder="Password"
+                secureTextEntry={isHidden}
+                onFocus={() => {
+                  setIsKeyboard(true);
+                  setOnFocus(fix.PASS);
+                }}
+                onChangeText={value =>
+                  setFormValue(prevState => ({ ...prevState, password: value }))
+                }
+              />
+              <TouchableOpacity
+                style={styles.passwordBtn}
+                onPress={() => setIsHidden(prevState => !prevState)}
+                onBlur={() => setIsHidden(true)}
+              >
+                <Text style={styles.mainText}>
+                  {isHidden ? 'Show' : 'Hide'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={styles.button} onPress={hideKeyboard}>
+              <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>
+                Log In
+              </Text>
             </TouchableOpacity>
-          </View>
 
-          <TouchableOpacity style={styles.button} onPress={hideKeyboard}>
-            <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>Log In</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              ...styles.button,
-              backgroundColor: '#FFFFFF',
-              marginBottom: isKeyboard ? 0 : 140,
-            }}
-          >
-            <Text style={styles.mainText}>Don't have an account? Register</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ImageBackground>
+            <TouchableOpacity
+              style={{
+                ...styles.button,
+                backgroundColor: '#FFFFFF',
+                marginBottom: isKeyboard ? 0 : 100,
+              }}
+            >
+              <Text style={styles.mainText}>
+                Don't have an account? Register
+              </Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

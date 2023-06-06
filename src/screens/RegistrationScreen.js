@@ -28,113 +28,117 @@ export const RegistrationScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
-      <ImageBackground
-        style={styles.backgroundImage}
-        source={backgroundImage}
-        resizeMode="cover"
-      >
-        <KeyboardAvoidingView
-          style={styles.mainContainer}
-          behavior={Platform.OS === 'ios' && 'padding'}
+      <View style={{ flex: 1 }}>
+        <ImageBackground
+          style={styles.backgroundImage}
+          source={backgroundImage}
+          resizeMode="cover"
         >
-          <View style={styles.userPhotoContainer}>
-            <Image style={styles.userPhoto} source={userPhoto} />
-            <TouchableOpacity style={styles.imageWrap}>
-              <Feather name="plus" size={20} color="#FF6C00" />
-            </TouchableOpacity>
-            {/* <TouchableOpacity
+          <KeyboardAvoidingView
+            style={styles.mainContainer}
+            behavior={Platform.OS === 'ios' && 'padding'}
+          >
+            <View style={styles.userPhotoContainer}>
+              <Image style={styles.userPhoto} source={userPhoto} />
+              <TouchableOpacity style={styles.imageWrap}>
+                <Feather name="plus" size={20} color="#FF6C00" />
+              </TouchableOpacity>
+              {/* <TouchableOpacity
             style={{ ...styles.imageWrap, borderColor: '#E8E8E8' }}
           >
             <Feather name="x" size={20} color="#E8E8E8" />
           </TouchableOpacity> */}
-          </View>
+            </View>
 
-          <Text style={styles.titleText}>Registration</Text>
+            <Text style={styles.titleText}>Registration</Text>
 
-          <TextInput
-            style={{
-              ...styles.input,
-              ...styles.mainText,
-              borderWidth: onFocus === fix.LOGIN ? 1 : 0,
-              backgroundColor: onFocus === fix.LOGIN ? '#FFFFFF' : '#E8E8E8',
-            }}
-            textContentType="username"
-            placeholder="Login"
-            value={formValue.login}
-            onFocus={() => {
-              setIsKeyboard(true);
-              setOnFocus(fix.LOGIN);
-            }}
-            onChangeText={value =>
-              setFormValue(prevState => ({ ...prevState, login: value }))
-            }
-          />
-          <TextInput
-            style={{
-              ...styles.input,
-              ...styles.mainText,
-              borderWidth: onFocus === fix.EMAIL ? 1 : 0,
-              backgroundColor: onFocus === fix.EMAIL ? '#FFFFFF' : '#E8E8E8',
-            }}
-            textContentType="emailAddress"
-            value={formValue.email}
-            inputMode="email"
-            placeholder="E-mail"
-            onFocus={() => {
-              setIsKeyboard(true);
-              setOnFocus(fix.EMAIL);
-            }}
-            onChangeText={value =>
-              setFormValue(prevState => ({ ...prevState, email: value }))
-            }
-          />
-          <View style={{ ...styles.passwordWrap, marginBottom: 43 }}>
             <TextInput
               style={{
                 ...styles.input,
                 ...styles.mainText,
-                marginBottom: 0,
-                borderWidth: onFocus === fix.PASS ? 1 : 0,
-                backgroundColor: onFocus === fix.PASS ? '#FFFFFF' : '#E8E8E8',
+                borderWidth: onFocus === fix.LOGIN ? 1 : 0,
+                backgroundColor: onFocus === fix.LOGIN ? '#FFFFFF' : '#E8E8E8',
               }}
-              textContentType="password"
-              value={formValue.password}
-              placeholder="Password"
-              secureTextEntry={isHidden}
+              textContentType="username"
+              placeholder="Login"
+              value={formValue.login}
               onFocus={() => {
                 setIsKeyboard(true);
-                setOnFocus(fix.PASS);
+                setOnFocus(fix.LOGIN);
               }}
               onChangeText={value =>
-                setFormValue(prevState => ({ ...prevState, password: value }))
+                setFormValue(prevState => ({ ...prevState, login: value }))
               }
             />
-            <TouchableOpacity
-              style={styles.passwordBtn}
-              onPress={() => setIsHidden(prevState => !prevState)}
-              onBlur={() => setIsHidden(true)}
-            >
-              <Text style={styles.mainText}>{isHidden ? 'Show' : 'Hide'}</Text>
+            <TextInput
+              style={{
+                ...styles.input,
+                ...styles.mainText,
+                borderWidth: onFocus === fix.EMAIL ? 1 : 0,
+                backgroundColor: onFocus === fix.EMAIL ? '#FFFFFF' : '#E8E8E8',
+              }}
+              textContentType="emailAddress"
+              value={formValue.email}
+              inputMode="email"
+              placeholder="E-mail"
+              onFocus={() => {
+                setIsKeyboard(true);
+                setOnFocus(fix.EMAIL);
+              }}
+              onChangeText={value =>
+                setFormValue(prevState => ({ ...prevState, email: value }))
+              }
+            />
+            <View style={{ ...styles.passwordWrap, marginBottom: 43 }}>
+              <TextInput
+                style={{
+                  ...styles.input,
+                  ...styles.mainText,
+                  marginBottom: 0,
+                  borderWidth: onFocus === fix.PASS ? 1 : 0,
+                  backgroundColor: onFocus === fix.PASS ? '#FFFFFF' : '#E8E8E8',
+                }}
+                textContentType="password"
+                value={formValue.password}
+                placeholder="Password"
+                secureTextEntry={isHidden}
+                onFocus={() => {
+                  setIsKeyboard(true);
+                  setOnFocus(fix.PASS);
+                }}
+                onChangeText={value =>
+                  setFormValue(prevState => ({ ...prevState, password: value }))
+                }
+              />
+              <TouchableOpacity
+                style={styles.passwordBtn}
+                onPress={() => setIsHidden(prevState => !prevState)}
+                onBlur={() => setIsHidden(true)}
+              >
+                <Text style={styles.mainText}>
+                  {isHidden ? 'Show' : 'Hide'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={styles.button} onPress={hideKeyboard}>
+              <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>
+                Register
+              </Text>
             </TouchableOpacity>
-          </View>
 
-          <TouchableOpacity style={styles.button} onPress={hideKeyboard}>
-            <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>
-              Register
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              ...styles.button,
-              backgroundColor: '#FFFFFF',
-              marginBottom: isKeyboard ? 0 : 50,
-            }}
-          >
-            <Text style={styles.mainText}>Have an account? Log In</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ImageBackground>
+            <TouchableOpacity
+              style={{
+                ...styles.button,
+                backgroundColor: '#FFFFFF',
+                marginBottom: isKeyboard ? 0 : 50,
+              }}
+            >
+              <Text style={styles.mainText}>Have an account? Log In</Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
