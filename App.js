@@ -5,6 +5,9 @@ import { useFonts } from 'expo-font';
 import { RegistrationScreen } from './src/screens/RegistrationScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
 import { PostsScreen } from './src/screens/PostsScreen';
+import { CreatePostsScreen } from './src/screens/CreatePostsScreen';
+import { CommentsScreen } from './src/screens/CommentsScreen';
+import { ProfileScreen } from './src/screens/ProfileScreen';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,9 +23,11 @@ export default function App() {
     <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
       {/* <RegistrationScreen /> */}
-      <LoginScreen />
+      {/* <LoginScreen /> */}
       {/* <PostsScreen /> */}
+      {/* <CreatePostsScreen /> */}
+      {/* <CommentsScreen /> */}
+      <ProfileScreen />
     </View>
   );
-  r;
 }

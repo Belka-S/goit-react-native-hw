@@ -4,7 +4,7 @@ import { SafeAreaView, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-import { POSTS } from './data';
+import { POSTS } from '../services/data';
 
 const userPhoto = require('../img/user.jpg');
 
@@ -13,13 +13,13 @@ export const PostsScreen = () => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <View style={[styles.header, styles.shadow]}>
+      <View style={styles.header}>
         <TouchableOpacity>
           <Feather name="arrow-left" size={24} color="rgba(33, 33, 33, 0.8)" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.titleBtn}>
-          <Text style={styles.titleText}>Publications</Text>
-        </TouchableOpacity>
+
+        <Text style={styles.titleText}>Publications</Text>
+
         <TouchableOpacity>
           <Feather name="log-out" size={24} color="#BDBDBD" />
         </TouchableOpacity>
@@ -52,7 +52,7 @@ export const PostsScreen = () => {
         ))}
       </ScrollView>
 
-      <View style={[styles.footer, styles.shadow]}>
+      <View style={styles.footer}>
         <TouchableOpacity>
           <Feather name="grid" size={24} color="rgba(33, 33, 33, 0.8)" />
         </TouchableOpacity>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomWidth: 0.25,
+    borderBottomWidth: 1,
     borderColor: '#E8E8E8',
   },
 
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
+    paddingVertical: 10,
     fontFamily: 'Roboto-Medium',
     fontSize: 17,
   },
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopWidth: 0.25,
+    borderTopWidth: 1,
     borderColor: '#E8E8E8',
   },
 

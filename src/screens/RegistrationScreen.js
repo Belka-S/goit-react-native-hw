@@ -18,12 +18,10 @@ export const RegistrationScreen = () => {
   const [onFocus, setOnFocus] = useState('');
 
   const hideKeyboard = () => {
-    console.log(formValue);
-
-    Keyboard.dismiss();
     setIsKeyboard(false);
     setOnFocus('');
     setFormValue(initialFormValue);
+    Keyboard.dismiss();
   };
 
   return (
@@ -66,6 +64,7 @@ export const RegistrationScreen = () => {
                 setIsKeyboard(true);
                 setOnFocus(fix.LOGIN);
               }}
+              onBlur={() => hideKeyboard()}
               onChangeText={value =>
                 setFormValue(prevState => ({ ...prevState, login: value }))
               }
@@ -85,6 +84,7 @@ export const RegistrationScreen = () => {
                 setIsKeyboard(true);
                 setOnFocus(fix.EMAIL);
               }}
+              onBlur={() => hideKeyboard()}
               onChangeText={value =>
                 setFormValue(prevState => ({ ...prevState, email: value }))
               }
@@ -106,6 +106,7 @@ export const RegistrationScreen = () => {
                   setIsKeyboard(true);
                   setOnFocus(fix.PASS);
                 }}
+                onBlur={() => hideKeyboard()}
                 onChangeText={value =>
                   setFormValue(prevState => ({ ...prevState, password: value }))
                 }
