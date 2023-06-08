@@ -23,7 +23,6 @@ export const RegistrationScreen = () => {
   const hideKeyboard = () => {
     setIsKeyboard(false);
     setOnFocus('');
-    setFormValue(initialFormValue);
     Keyboard.dismiss();
   };
 
@@ -125,7 +124,13 @@ export const RegistrationScreen = () => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={hideKeyboard}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                hideKeyboard();
+                setFormValue(initialFormValue);
+              }}
+            >
               <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>
                 Register
               </Text>

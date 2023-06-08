@@ -23,7 +23,9 @@ export const useRoute = isAuth => {
           tabBarShowLabel: false,
           tabBarStyle: {
             paddingTop: 10,
+            paddingBottom: 35,
             paddingHorizontal: 55,
+            height: 85,
           },
           headerTitleAlign: 'center',
         }}

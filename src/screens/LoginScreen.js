@@ -21,7 +21,6 @@ export const LoginScreen = () => {
   const hideKeyboard = () => {
     setIsKeyboard(false);
     setOnFocus('');
-    setFormValue(initialFormValue);
     Keyboard.dismiss();
   };
 
@@ -92,7 +91,13 @@ export const LoginScreen = () => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={hideKeyboard}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                hideKeyboard();
+                setFormValue(initialFormValue);
+              }}
+            >
               <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>
                 Log In
               </Text>

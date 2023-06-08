@@ -3,6 +3,8 @@ import { TouchableOpacity, Image, Platform, TextInput } from 'react-native';
 import { View, StyleSheet, Text } from 'react-native';
 import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
+import { Camera, CameraType } from 'expo-camera';
+
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -12,14 +14,26 @@ const initialFormValue = { tittle: '', location: '' };
 const image = require('../assets/img/image-sunset.jpg');
 
 export const CreatePostsScreen = () => {
+  // const [type, setType] = useState(CameraType.back);
   const [{ tittle, location }, setFormValue] = useState(initialFormValue);
   const [isKeyboard, setIsKeyboard] = useState(false);
   const [onFocus, setOnFocus] = useState('');
+  const [cameraRef, setCameraRef] = useState(null);
+
+  // function toggleCameraType() {
+  //   setType(current =>
+  //     current === CameraType.back ? CameraType.front : CameraType.back
+  //   );
+  // }
 
   const hideKeyboard = () => {
     setOnFocus('');
     setIsKeyboard(false);
     Keyboard.dismiss();
+  };
+
+  const takeImage = async () => {
+    console.log(cameraRef);
   };
 
   return (
@@ -30,14 +44,14 @@ export const CreatePostsScreen = () => {
           behavior={Platform.OS === 'ios' ? 'position' : 'height'}
         >
           <View style={styles.hero}>
-            <View style={styles.imageContainer}>
+            <Camera style={styles.imageContainer} ref={setCameraRef}>
               {/* <Image style={styles.image} source={image} /> */}
               <View style={styles.camera}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={takeImage}>
                   <FontAwesome name="camera" size={24} color={'#BDBDBD'} />
                 </TouchableOpacity>
               </View>
-            </View>
+            </Camera>
 
             <Text style={styles.imageAction}>Edit image</Text>
             <TextInput
@@ -206,7 +220,7 @@ const styles = StyleSheet.create({
 
   // Footer
   trashBtn: {
-    marginBottom: 30,
+    marginBottom: 35,
     width: 70,
     height: 40,
     alignSelf: 'center',
