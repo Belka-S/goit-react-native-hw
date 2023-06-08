@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, Image, Platform } from 'react-native';
-import { SafeAreaView, ScrollView, View } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, Image } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import { POSTS } from '../services/data';
 
-const userPhoto = require('../img/user.jpg');
+const userPhoto = require('../assets/img/user.jpg');
 
 export const PostsScreen = () => {
   const [posts, setPosts] = useState(POSTS);
 
   return (
-    // <SafeAreaView style={styles.mainContainer}>
     <ScrollView style={styles.hero}>
       <View style={styles.userContainer}>
         <Image style={styles.userPhoto} source={userPhoto} />
@@ -39,17 +37,10 @@ export const PostsScreen = () => {
         </View>
       ))}
     </ScrollView>
-    // </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
-  },
-
   // Hero
   hero: {
     paddingHorizontal: 16,
@@ -113,28 +104,4 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textDecorationColor: '#212121',
   },
-
-  // Footer
-  footer: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderColor: '#E8E8E8',
-  },
-
-  addBtn: {
-    marginLeft: 40,
-    marginRight: 40,
-    width: 70,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    backgroundColor: '#FF6C00',
-  },
-
-  addImage: { width: 14, height: 14 },
 });

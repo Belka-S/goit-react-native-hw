@@ -10,11 +10,11 @@ import { Feather } from '@expo/vector-icons';
 
 import { COMMENTS } from '../services/data';
 
-const image = require('../img/image-sunset.jpg');
+const image = require('../assets/img/image-sunset.jpg');
 const initialComment = {
   id: null,
   userName: 'user-1',
-  avatar: require('../img/avatar-2.png'),
+  avatar: require('../assets/img/avatar-2.png'),
   text: '',
   date: null,
 };

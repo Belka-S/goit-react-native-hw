@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, Platform, TextInput } from 'react-native';
-import { SafeAreaView, ScrollView, View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -9,7 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { fix } from '../services/constants';
 
 const initialFormValue = { tittle: '', location: '' };
-const image = require('../img/image-sunset.jpg');
+const image = require('../assets/img/image-sunset.jpg');
 
 export const CreatePostsScreen = () => {
   const [{ tittle, location }, setFormValue] = useState(initialFormValue);
@@ -24,25 +24,9 @@ export const CreatePostsScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
-      <SafeAreaView style={styles.mainContainer}>
-        {/* <View style={styles.header}>
-          <TouchableOpacity>
-            <Feather
-              name="arrow-left"
-              size={24}
-              color="rgba(33, 33, 33, 0.8)"
-            />
-          </TouchableOpacity>
-
-          <Text style={styles.titleText}>Create Publication</Text>
-
-          <TouchableOpacity>
-            <Feather name="log-out" size={24} color="#BDBDBD" />
-          </TouchableOpacity>
-        </View> */}
-
+      <View style={styles.mainContainer}>
         <KeyboardAvoidingView
-          style={{ flex: isKeyboard ? 0 : 1 }}
+          style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'position' : 'height'}
         >
           <View style={styles.hero}>
@@ -84,7 +68,7 @@ export const CreatePostsScreen = () => {
               <Feather name="map-pin" size={20} color="#BDBDBD" />
               <TextInput
                 style={{ ...styles.imageDetail, marginLeft: 5 }}
-                textContentType="jobTitle"
+                textContentType="location"
                 value={location}
                 placeholder="Location..."
                 onFocus={() => {
@@ -116,21 +100,19 @@ export const CreatePostsScreen = () => {
           </View>
         </KeyboardAvoidingView>
 
-        <View style={styles.footer}>
-          <TouchableOpacity
-            style={{
-              ...styles.trashBtn,
-              backgroundColor: tittle ? '#FF6C00' : '#F6F6F6',
-            }}
-          >
-            <Feather
-              name="trash-2"
-              size={20}
-              color={tittle ? '#FFFFFF' : '#BDBDBD'}
-            />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+        <TouchableOpacity
+          style={{
+            ...styles.trashBtn,
+            backgroundColor: tittle ? '#FF6C00' : '#F6F6F6',
+          }}
+        >
+          <Feather
+            name="trash-2"
+            size={20}
+            color={tittle ? '#FFFFFF' : '#BDBDBD'}
+          />
+        </TouchableOpacity>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -140,28 +122,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  // Header
-  header: {
-    paddingTop: Platform.OS === 'ios' ? 0 : 35,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#E8E8E8',
-  },
-
-  titleText: {
-    paddingVertical: 10,
-    fontFamily: 'Roboto-Medium',
-    fontSize: 17,
-  },
-
   // Hero
   hero: {
     paddingHorizontal: 16,
     paddingVertical: 32,
+    backgroundColor: '#FFFFFF',
   },
 
   imageContainer: {
@@ -240,29 +205,13 @@ const styles = StyleSheet.create({
   },
 
   // Footer
-  footer: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   trashBtn: {
-    marginLeft: 40,
-    marginRight: 40,
+    marginBottom: 30,
     width: 70,
     height: 40,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
-  },
-
-  // Common
-  shadow: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 0.5,
   },
 });

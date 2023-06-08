@@ -58,17 +58,8 @@ export const useRoute = isAuth => {
           options={{
             tabBarStyle: { display: 'none' },
             tabBarIcon: ({ focused, color, size }) => (
-              <View
-                style={{
-                  ...styles.createPost,
-                  backgroundColor: focused ? '#FF6C00' : '#F6F6F6',
-                }}
-              >
-                <Feather
-                  name="plus"
-                  size={size}
-                  color={focused ? '#FFFFFF' : '#BDBDBD'}
-                />
+              <View style={styles.createPost}>
+                <Feather name="plus" size={size} color={'#FFFFFF'} />
               </View>
             ),
             headerLeft: props => {
@@ -136,5 +127,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
+    backgroundColor: '#FF6C00',
   },
 });

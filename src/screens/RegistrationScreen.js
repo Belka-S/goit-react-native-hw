@@ -8,8 +8,8 @@ import { Feather } from '@expo/vector-icons';
 
 import { fix } from '../services/constants';
 
-const backgroundImage = require('../img/background-main-1x.jpg');
-const userPhoto = require('../img/user.jpg');
+const backgroundImage = require('../assets/img/background-main-1x.jpg');
+const userPhoto = require('../assets/img/user.jpg');
 const initialFormValue = { login: '', email: '', password: '' };
 
 export const RegistrationScreen = () => {
@@ -31,7 +31,7 @@ export const RegistrationScreen = () => {
     <TouchableWithoutFeedback onPress={hideKeyboard}>
       <View style={{ flex: 1 }}>
         <ImageBackground
-          style={styles.backgroundImage}
+          style={{ flex: 1, justifyContent: 'flex-end' }}
           source={backgroundImage}
           resizeMode="cover"
         >
@@ -149,11 +149,6 @@ export const RegistrationScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-
   mainContainer: {
     paddingHorizontal: 16,
     paddingTop: 92,

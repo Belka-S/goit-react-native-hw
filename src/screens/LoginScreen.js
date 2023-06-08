@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 
 import { fix } from '../services/constants';
 
-const backgroundImage = require('../img/background-main-1x.jpg');
+const backgroundImage = require('../assets/img/background-main-1x.jpg');
 const initialFormValue = { email: '', password: '' };
 
 export const LoginScreen = () => {
@@ -29,7 +29,7 @@ export const LoginScreen = () => {
     <TouchableWithoutFeedback onPress={hideKeyboard}>
       <View style={{ flex: 1 }}>
         <ImageBackground
-          style={styles.backgroundImage}
+          style={{ flex: 1, justifyContent: 'flex-end' }}
           source={backgroundImage}
           resizeMode="cover"
         >
@@ -118,15 +118,9 @@ export const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-
   mainContainer: {
     paddingHorizontal: 16,
     paddingTop: 32,
-    // paddingBottom: 78,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: '#FFFFFF',

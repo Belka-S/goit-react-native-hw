@@ -4,94 +4,65 @@ import { TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
 
-const backgroundImage = require('../img/background-main-1x.jpg');
-const userPhoto = require('../img/user.jpg');
+const backgroundImage = require('../assets/img/background-main-1x.jpg');
+const userPhoto = require('../assets/img/user.jpg');
 import { POSTS } from '../services/data';
 
 export const ProfileScreen = () => {
   const [posts, setPosts] = useState(POSTS);
 
   return (
-    <View style={{ flex: 1 }}>
-      <ImageBackground
-        style={styles.backgroundImage}
-        source={backgroundImage}
-        resizeMode="cover"
-      >
-        <ScrollView>
-          <View style={styles.hero}>
-            <View style={styles.userPhotoContainer}>
-              <Image style={styles.userPhoto} source={userPhoto} />
-              {/* <TouchableOpacity style={styles.imageWrap}>
+    <ImageBackground source={backgroundImage} resizeMode="cover">
+      <ScrollView>
+        <View style={styles.hero}>
+          <View style={styles.userPhotoContainer}>
+            <Image style={styles.userPhoto} source={userPhoto} />
+            {/* <TouchableOpacity style={styles.imageWrap}>
               <Feather name="plus" size={20} color="#FF6C00" />
             </TouchableOpacity> */}
-              <TouchableOpacity
-                style={{ ...styles.imageWrap, borderColor: '#E8E8E8' }}
-              >
-                <Feather name="x" size={20} color="#E8E8E8" />
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity style={styles.logOut}>
-              <Feather name="log-out" size={24} color="#BDBDBD" />
+            <TouchableOpacity
+              style={{ ...styles.imageWrap, borderColor: '#E8E8E8' }}
+            >
+              <Feather name="x" size={20} color="#E8E8E8" />
             </TouchableOpacity>
-            <Text style={styles.titleText}>Natali Shevchenko</Text>
+          </View>
+          <TouchableOpacity style={styles.logOut}>
+            <Feather name="log-out" size={24} color="#BDBDBD" />
+          </TouchableOpacity>
+          <Text style={styles.titleText}>Natali Shevchenko</Text>
 
-            {posts.map(el => (
-              <View style={{ marginBottom: 32 }} key={el.id}>
-                <Image style={styles.image} source={el.image} />
-                <Text style={styles.imageTitle}>{el.title}</Text>
-                <View style={styles.detailContainer}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity
-                      style={{ ...styles.detail, marginRight: 24 }}
-                    >
-                      <Feather
-                        name="message-circle"
-                        size={20}
-                        color="#FF6C00"
-                      />
-                      <Text style={styles.comments}>{el.comments}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.detail}>
-                      <Feather name="thumbs-up" size={20} color="#FF6C00" />
-                      <Text style={styles.comments}>{el.comments}</Text>
-                    </TouchableOpacity>
-                  </View>
-
+          {posts.map(el => (
+            <View style={{ marginBottom: 32 }} key={el.id}>
+              <Image style={styles.image} source={el.image} />
+              <Text style={styles.imageTitle}>{el.title}</Text>
+              <View style={styles.detailContainer}>
+                <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    style={{ ...styles.detail, marginRight: 24 }}
+                  >
+                    <Feather name="message-circle" size={20} color="#FF6C00" />
+                    <Text style={styles.comments}>{el.comments}</Text>
+                  </TouchableOpacity>
                   <TouchableOpacity style={styles.detail}>
-                    <Feather name="map-pin" size={20} color="#BDBDBD" />
-                    <Text style={styles.location}>{el.location}</Text>
+                    <Feather name="thumbs-up" size={20} color="#FF6C00" />
+                    <Text style={styles.comments}>{el.comments}</Text>
                   </TouchableOpacity>
                 </View>
+
+                <TouchableOpacity style={styles.detail}>
+                  <Feather name="map-pin" size={20} color="#BDBDBD" />
+                  <Text style={styles.location}>{el.location}</Text>
+                </TouchableOpacity>
               </View>
-            ))}
-          </View>
-        </ScrollView>
-
-        {/* <View style={styles.footer}>
-          <TouchableOpacity>
-            <Feather name="grid" size={24} color="rgba(33, 33, 33, 0.8)" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.addBtn}>
-            <Feather name="plus" size={20} color="#FFFFFF" />
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <Feather name="user" size={24} color="rgba(33, 33, 33, 0.8)" />
-          </TouchableOpacity>
-        </View> */}
-      </ImageBackground>
-    </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    // justifyContent: 'flex-start',
-  },
-
   // Hero
   hero: {
     marginTop: 140,

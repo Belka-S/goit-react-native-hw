@@ -6,12 +6,11 @@ import { useRoute } from './src/services/router';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Roboto-Medium': require('./src/fonts/Roboto-Medium.ttf'),
-    'Roboto-Regular': require('./src/fonts/Roboto-Regular.ttf'),
+    'Roboto-Medium': require('./src//assets/fonts/Roboto-Medium.ttf'),
+    'Roboto-Regular': require('./src//assets/fonts/Roboto-Regular.ttf'),
   });
 
-  const isAuth = {};
-
+  const isAuth = null;
   if (!fontsLoaded) {
     return null;
   }
