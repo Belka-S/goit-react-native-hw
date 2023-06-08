@@ -5,5 +5,3 @@ export const fix = Object.freeze({
   TITLE: 'title',
   LOCATION: 'location,',
 });
-
-export const colors = Object.freeze({ ACTIVE: '#FF6C00' });

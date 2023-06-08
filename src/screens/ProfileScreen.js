@@ -68,7 +68,7 @@ export const ProfileScreen = () => {
           </View>
         </ScrollView>
 
-        <View style={styles.footer}>
+        {/* <View style={styles.footer}>
           <TouchableOpacity>
             <Feather name="grid" size={24} color="rgba(33, 33, 33, 0.8)" />
           </TouchableOpacity>
@@ -80,7 +80,7 @@ export const ProfileScreen = () => {
           <TouchableOpacity>
             <Feather name="user" size={24} color="rgba(33, 33, 33, 0.8)" />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </ImageBackground>
     </View>
   );

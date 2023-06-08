@@ -12,60 +12,34 @@ export const PostsScreen = () => {
   const [posts, setPosts] = useState(POSTS);
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Feather name="arrow-left" size={24} color="rgba(33, 33, 33, 0.8)" />
-        </TouchableOpacity>
-
-        <Text style={styles.titleText}>Publications</Text>
-
-        <TouchableOpacity>
-          <Feather name="log-out" size={24} color="#BDBDBD" />
-        </TouchableOpacity>
+    // <SafeAreaView style={styles.mainContainer}>
+    <ScrollView style={styles.hero}>
+      <View style={styles.userContainer}>
+        <Image style={styles.userPhoto} source={userPhoto} />
+        <View>
+          <Text style={styles.userName}>Natali Shevchenko</Text>
+          <Text style={styles.userEmail}>sheva@mail.com</Text>
+        </View>
       </View>
+      {posts.map(el => (
+        <View style={{ marginBottom: 32 }} key={el.id}>
+          <Image style={styles.image} source={el.image} />
+          <Text style={styles.imageTitle}>{el.title}</Text>
+          <View style={styles.detailContainer}>
+            <TouchableOpacity style={styles.detail}>
+              <Feather name="message-circle" size={20} color="#BDBDBD" />
+              <Text style={styles.comments}>{el.comments}</Text>
+            </TouchableOpacity>
 
-      <ScrollView style={styles.hero}>
-        <View style={styles.userContainer}>
-          <Image style={styles.userPhoto} source={userPhoto} />
-          <View>
-            <Text style={styles.userName}>Natali Shevchenko</Text>
-            <Text style={styles.userEmail}>sheva@mail.com</Text>
+            <TouchableOpacity style={styles.detail}>
+              <Feather name="map-pin" size={20} color="#BDBDBD" />
+              <Text style={styles.location}>{el.location}</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        {posts.map(el => (
-          <View style={{ marginBottom: 32 }} key={el.id}>
-            <Image style={styles.image} source={el.image} />
-            <Text style={styles.imageTitle}>{el.title}</Text>
-            <View style={styles.detailContainer}>
-              <TouchableOpacity style={styles.detail}>
-                <Feather name="message-circle" size={20} color="#BDBDBD" />
-                <Text style={styles.comments}>{el.comments}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.detail}>
-                <Feather name="map-pin" size={20} color="#BDBDBD" />
-                <Text style={styles.location}>{el.location}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <TouchableOpacity>
-          <Feather name="grid" size={24} color="rgba(33, 33, 33, 0.8)" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.addBtn}>
-          <Feather name="plus" size={20} color="#FFFFFF" />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Feather name="user" size={24} color="rgba(33, 33, 33, 0.8)" />
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+      ))}
+    </ScrollView>
+    // </SafeAreaView>
   );
 };
 
@@ -75,33 +49,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#FFFFFF',
   },
-  // Header
-  header: {
-    paddingTop: Platform.OS === 'ios' ? 0 : 35,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#E8E8E8',
-  },
-
-  titleBtn: {
-    paddingHorizontal: 50,
-    paddingVertical: 10,
-  },
-
-  titleText: {
-    paddingVertical: 10,
-    fontFamily: 'Roboto-Medium',
-    fontSize: 17,
-  },
 
   // Hero
   hero: {
     paddingHorizontal: 16,
     paddingVertical: 32,
+    backgroundColor: '#FFFFFF',
   },
 
   userContainer: {
@@ -181,14 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 25,
     backgroundColor: '#FF6C00',
-  },
-
-  // Common
-  shadow: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 0.5,
   },
 
   addImage: { width: 14, height: 14 },

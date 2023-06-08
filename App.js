@@ -1,13 +1,8 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
 import { useFonts } from 'expo-font';
 
-import { RegistrationScreen } from './src/screens/RegistrationScreen';
-import { LoginScreen } from './src/screens/LoginScreen';
-import { PostsScreen } from './src/screens/PostsScreen';
-import { CreatePostsScreen } from './src/screens/CreatePostsScreen';
-import { CommentsScreen } from './src/screens/CommentsScreen';
-import { ProfileScreen } from './src/screens/ProfileScreen';
+import { useRoute } from './src/services/router';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -15,19 +10,16 @@ export default function App() {
     'Roboto-Regular': require('./src/fonts/Roboto-Regular.ttf'),
   });
 
+  const isAuth = {};
+
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <NavigationContainer style={{ flex: 1 }}>
       <StatusBar style="auto" />
-      {/* <RegistrationScreen /> */}
-      {/* <LoginScreen /> */}
-      {/* <PostsScreen /> */}
-      {/* <CreatePostsScreen /> */}
-      {/* <CommentsScreen /> */}
-      <ProfileScreen />
-    </View>
+      {useRoute(isAuth)}
+    </NavigationContainer>
   );
 }

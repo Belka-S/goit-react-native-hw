@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { StyleSheet, Keyboard } from 'react-native';
@@ -16,6 +17,8 @@ export const RegistrationScreen = () => {
   const [formValue, setFormValue] = useState(initialFormValue);
   const [isHidden, setIsHidden] = useState(true);
   const [onFocus, setOnFocus] = useState('');
+
+  const navigation = useNavigation();
 
   const hideKeyboard = () => {
     setIsKeyboard(false);
@@ -134,6 +137,7 @@ export const RegistrationScreen = () => {
                 backgroundColor: '#FFFFFF',
                 marginBottom: isKeyboard ? 0 : 50,
               }}
+              onPress={() => navigation.navigate('Login')}
             >
               <Text style={styles.mainText}>Have an account? Log In</Text>
             </TouchableOpacity>

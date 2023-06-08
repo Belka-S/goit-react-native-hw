@@ -25,7 +25,7 @@ export const CreatePostsScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
       <SafeAreaView style={styles.mainContainer}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <TouchableOpacity>
             <Feather
               name="arrow-left"
@@ -39,7 +39,7 @@ export const CreatePostsScreen = () => {
           <TouchableOpacity>
             <Feather name="log-out" size={24} color="#BDBDBD" />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <KeyboardAvoidingView
           style={{ flex: isKeyboard ? 0 : 1 }}
@@ -47,10 +47,10 @@ export const CreatePostsScreen = () => {
         >
           <View style={styles.hero}>
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={image} />
+              {/* <Image style={styles.image} source={image} /> */}
               <View style={styles.camera}>
                 <TouchableOpacity>
-                  <FontAwesome name="camera" size={24} color={'#FFFFFF'} />
+                  <FontAwesome name="camera" size={24} color={'#BDBDBD'} />
                 </TouchableOpacity>
               </View>
             </View>
