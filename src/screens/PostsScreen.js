@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, Text, Image } from 'react-native';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, Text, Image, View } from 'react-native';
+import { ScrollView, StyleSheet, FlatList } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { nanoid } from 'nanoid';
 
 import { POSTS } from '../services/data';
 
@@ -10,18 +11,23 @@ const userPhoto = require('../assets/img/user.jpg');
 export const PostsScreen = ({ route }) => {
   const [posts, setPosts] = useState(POSTS);
 
-  console.log(route.params);
-  // posts.push({
-  //   id: '45k6-j54k-4jt4',
-  //   image: route.params.image,
-  //   title: 'qwe',
-  //   likes: 0,
-  //   comments: 0,
-  //   location: 'asd',
-  // });
+  useEffect(() => {
+    if (!route.params) return;
+
+    const post = {
+      id: nanoid(),
+      image: { uri: route.params.image },
+      title: route.params.title,
+      likes: 0,
+      comments: 0,
+      location: route.params.location,
+    };
+
+    setPosts(prevState => [...prevState, post]);
+  }, [route.params]);
 
   return (
-    <ScrollView style={styles.hero}>
+    <View style={styles.hero}>
       <View style={styles.userContainer}>
         <Image style={styles.userPhoto} source={userPhoto} />
         <View>
@@ -29,24 +35,28 @@ export const PostsScreen = ({ route }) => {
           <Text style={styles.userEmail}>sheva@mail.com</Text>
         </View>
       </View>
-      {posts.map(el => (
-        <View style={{ marginBottom: 32 }} key={el.id}>
-          <Image style={styles.image} source={el.image} />
-          <Text style={styles.imageTitle}>{el.title}</Text>
-          <View style={styles.detailContainer}>
-            <TouchableOpacity style={styles.detail}>
-              <Feather name="message-circle" size={20} color="#BDBDBD" />
-              <Text style={styles.comments}>{el.comments}</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={styles.detail}>
-              <Feather name="map-pin" size={20} color="#BDBDBD" />
-              <Text style={styles.location}>{el.location}</Text>
-            </TouchableOpacity>
+      <FlatList
+        data={posts.reverse()}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <View style={{ marginBottom: 32 }}>
+            <Image style={styles.image} source={item.image} />
+            <Text style={styles.imageTitle}>{item.title}</Text>
+            <View style={styles.detailContainer}>
+              <TouchableOpacity style={styles.detail}>
+                <Feather name="message-circle" size={20} color="#BDBDBD" />
+                <Text style={styles.comments}>{item.comments}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.detail}>
+                <Feather name="map-pin" size={20} color="#BDBDBD" />
+                <Text style={styles.location}>{item.location}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      ))}
-    </ScrollView>
+        )}
+      />
+    </View>
   );
 };
 
@@ -54,7 +64,8 @@ const styles = StyleSheet.create({
   // Hero
   hero: {
     paddingHorizontal: 16,
-    paddingVertical: 32,
+    paddingTop: 32,
+    flex: 1,
     backgroundColor: '#FFFFFF',
   },
 

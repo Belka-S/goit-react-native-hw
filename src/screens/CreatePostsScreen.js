@@ -12,10 +12,10 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { fix } from '../services/constants';
 
-const initialFormValue = { tittle: '', location: '' };
+const initialFormValue = { title: '', location: '' };
 
 export const CreatePostsScreen = ({ navigation }) => {
-  const [{ tittle, location }, setFormValue] = useState(initialFormValue);
+  const [{ title, location }, setFormValue] = useState(initialFormValue);
   const [isKeyboard, setIsKeyboard] = useState(false);
   const [onFocus, setOnFocus] = useState('');
 
@@ -49,7 +49,9 @@ export const CreatePostsScreen = ({ navigation }) => {
   };
 
   const sendImage = () => {
-    navigation.navigate('Posts', { image });
+    navigation.navigate('Posts', { image, title, location });
+    setFormValue(initialFormValue);
+    hideKeyboard();
   };
 
   return (
@@ -89,15 +91,15 @@ export const CreatePostsScreen = ({ navigation }) => {
                 borderColor: onFocus === fix.TITLE ? '#FF6C00' : '#E8E8E8',
               }}
               textContentType="jobTitle"
-              value={tittle}
-              placeholder="Tittle..."
+              value={title}
+              placeholder="Title..."
               onFocus={() => {
                 setIsKeyboard(true);
                 setOnFocus(fix.TITLE);
               }}
               onBlur={() => hideKeyboard()}
               onChangeText={value =>
-                setFormValue(prevState => ({ ...prevState, tittle: value }))
+                setFormValue(prevState => ({ ...prevState, title: value }))
               }
             />
 
@@ -219,6 +221,7 @@ const styles = StyleSheet.create({
 
   imageDetail: {
     height: 50,
+    width: '100%',
     fontFamily: 'Roboto-Medium',
     fontSize: 16,
   },
