@@ -10,7 +10,7 @@ export default function App() {
     'Roboto-Regular': require('./src//assets/fonts/Roboto-Regular.ttf'),
   });
 
-  const isAuth = {};
+  const isAuth = null;
   if (!fontsLoaded) {
     return null;
   }

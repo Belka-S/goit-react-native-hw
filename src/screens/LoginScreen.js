@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { View, Text, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { StyleSheet, Keyboard } from 'react-native';
@@ -10,13 +9,11 @@ import { fix } from '../services/constants';
 const backgroundImage = require('../assets/img/background-main-1x.jpg');
 const initialFormValue = { email: '', password: '' };
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const [isKeyboard, setIsKeyboard] = useState(false);
   const [formValue, setFormValue] = useState(initialFormValue);
   const [isHidden, setIsHidden] = useState(true);
   const [onFocus, setOnFocus] = useState('');
-
-  const navigation = useNavigation();
 
   const hideKeyboard = () => {
     setIsKeyboard(false);
@@ -96,11 +93,10 @@ export const LoginScreen = () => {
               onPress={() => {
                 hideKeyboard();
                 setFormValue(initialFormValue);
+                navigation.navigate('Home');
               }}
             >
-              <Text style={{ ...styles.mainText, color: '#FFFFFF' }}>
-                Log In
-              </Text>
+              <Text style={styles.buttonText}>Log In</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -154,12 +150,19 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    padding: 16,
+    paddingHorizontal: 16,
     width: '100%',
     height: 50,
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 25,
     backgroundColor: '#FF6C00',
+  },
+
+  buttonText: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 18,
+    color: '#FFFFFF',
   },
 
   passwordWrap: {

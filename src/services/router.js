@@ -25,7 +25,6 @@ export const useRoute = isAuth => {
             paddingTop: 10,
             paddingBottom: 35,
             paddingHorizontal: 55,
-            height: 85,
           },
           headerTitleAlign: 'center',
         }}

@@ -7,8 +7,18 @@ import { POSTS } from '../services/data';
 
 const userPhoto = require('../assets/img/user.jpg');
 
-export const PostsScreen = () => {
+export const PostsScreen = ({ route }) => {
   const [posts, setPosts] = useState(POSTS);
+
+  console.log(route.params);
+  // posts.push({
+  //   id: '45k6-j54k-4jt4',
+  //   image: route.params.image,
+  //   title: 'qwe',
+  //   likes: 0,
+  //   comments: 0,
+  //   location: 'asd',
+  // });
 
   return (
     <ScrollView style={styles.hero}>
