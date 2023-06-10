@@ -32,28 +32,30 @@ export const Home = ({ navigation }) => {
         name="Comments"
         component={CommentsScreen}
         options={{
-          headerLeft: props => (
-            <TouchableOpacity
+          headerBackImage: () => (
+            <Feather
               style={{ marginLeft: 16 }}
-              onPress={() => navigation.goBack()}
-            >
-              <Feather name="arrow-left" size={24} color="#BDBDBD" />
-            </TouchableOpacity>
+              name="arrow-left"
+              size={26}
+              color="#BDBDBD"
+            />
           ),
+          headerBackTitleVisible: false,
         }}
       />
       <NestedScreen.Screen
         name="Map"
         component={MapScreen}
         options={{
-          headerLeft: props => (
-            <TouchableOpacity
+          headerBackImage: () => (
+            <Feather
               style={{ marginLeft: 16 }}
-              onPress={() => navigation.goBack()}
-            >
-              <Feather name="arrow-left" size={24} color="#BDBDBD" />
-            </TouchableOpacity>
+              name="arrow-left"
+              size={26}
+              color="#BDBDBD"
+            />
           ),
+          headerBackTitleVisible: false,
         }}
       />
     </NestedScreen.Navigator>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Image, Platform, TextInput } from 'react-native';
 import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { Keyboard, KeyboardAvoidingView } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
@@ -131,12 +131,21 @@ export const CreatePostsScreen = ({ navigation }) => {
                 borderColor: onFocus === fix.LOCATION ? '#FF6C00' : '#E8E8E8',
               }}
             >
-              <Feather name="map-pin" size={20} color="#BDBDBD" />
+              {locationCoords ? (
+                <Feather name="map-pin" size={20} color="#BDBDBD" />
+              ) : (
+                <ActivityIndicator size="small" color="#FF6C00" />
+              )}
               <TextInput
                 style={{ ...styles.imageDetail, marginLeft: 5 }}
                 textContentType="location"
                 value={location}
-                placeholder="Location..."
+                placeholder={
+                  locationCoords
+                    ? 'Location...'
+                    : 'Looking for location, please wait!'
+                }
+                placeholderTextColor={locationCoords ? '#BDBDBD' : '#FF6C00'}
                 onFocus={() => {
                   setIsKeyboard(true);
                   setOnFocus(fix.LOCATION);
