@@ -8,13 +8,13 @@ import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-import { COMMENTS } from '../services/data';
+import { COMMENTS } from '../../services/data';
 
-const image = require('../assets/img/image-sunset.jpg');
+const image = require('../../assets/img/image-sunset.jpg');
 const initialComment = {
   id: null,
   userName: 'user-1',
-  avatar: require('../assets/img/avatar-2.png'),
+  avatar: require('../../assets/img/avatar-2.png'),
   text: '',
   date: null,
 };
@@ -31,16 +31,6 @@ export const CommentsScreen = () => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Feather name="arrow-left" size={24} color="rgba(33, 33, 33, 0.8)" />
-        </TouchableOpacity>
-        <Text style={styles.titleText}>Comments</Text>
-        <TouchableOpacity>
-          <Feather name="log-out" size={24} color="#BDBDBD" />
-        </TouchableOpacity>
-      </View>
-
       <TouchableWithoutFeedback onPress={hideKeyboard}>
         <ScrollView style={styles.hero}>
           <Image style={styles.image} source={image} />
@@ -124,23 +114,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: '#FFFFFF',
-  },
-  // Header
-  header: {
-    paddingTop: Platform.OS === 'ios' ? 0 : 35,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#E8E8E8',
-  },
-
-  titleText: {
-    paddingVertical: 10,
-    fontFamily: 'Roboto-Medium',
-    fontSize: 17,
   },
 
   // Hero

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, Image, View } from 'react-native';
-import { ScrollView, StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { nanoid } from 'nanoid';
 
-import { POSTS } from '../services/data';
+import { POSTS } from '../../services/data';
 
-const userPhoto = require('../assets/img/user.jpg');
+const userPhoto = require('../../assets/img/user.jpg');
 
-export const PostsScreen = ({ route }) => {
+export const PostsScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState(POSTS);
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export const PostsScreen = ({ route }) => {
       likes: 0,
       comments: 0,
       location: route.params.location,
+      locationCoords: route.params.locationCoords,
     };
 
     setPosts(prevState => [...prevState, post]);
@@ -40,15 +41,23 @@ export const PostsScreen = ({ route }) => {
         data={posts.reverse()}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <View style={{ marginBottom: 32 }}>
+          <View style={{ marginBottom: 32, paddingHorizontal: 16 }}>
             <Image style={styles.image} source={item.image} />
             <Text style={styles.imageTitle}>{item.title}</Text>
+
             <View style={styles.detailContainer}>
-              <TouchableOpacity style={styles.detail}>
+              <TouchableOpacity
+                style={styles.detail}
+                onPress={() => navigation.navigate('Comments')}
+              >
                 <Feather name="message-circle" size={20} color="#BDBDBD" />
                 <Text style={styles.comments}>{item.comments}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detail}>
+
+              <TouchableOpacity
+                style={styles.detail}
+                onPress={() => navigation.navigate('Map', { item })}
+              >
                 <Feather name="map-pin" size={20} color="#BDBDBD" />
                 <Text style={styles.location}>{item.location}</Text>
               </TouchableOpacity>
@@ -63,14 +72,14 @@ export const PostsScreen = ({ route }) => {
 const styles = StyleSheet.create({
   // Hero
   hero: {
-    paddingHorizontal: 16,
-    paddingTop: 32,
+    paddingTop: 16,
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
 
   userContainer: {
-    marginBottom: 32,
+    marginBottom: 16,
+    paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },

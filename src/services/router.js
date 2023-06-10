@@ -5,12 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-import { RegistrationScreen } from '../screens/RegistrationScreen';
-import { LoginScreen } from '../screens/LoginScreen';
-import { PostsScreen } from '../screens/PostsScreen';
-import { CreatePostsScreen } from '../screens/CreatePostsScreen';
-import { CommentsScreen } from '../screens/CommentsScreen';
-import { ProfileScreen } from '../screens/ProfileScreen';
+import { RegistrationScreen } from '../screens/authScreens/RegistrationScreen';
+import { LoginScreen } from '../screens/authScreens/LoginScreen';
+import { Home } from '../screens/mainScreens/Home';
+import { CreatePostsScreen } from '../screens/mainScreens/CreatePostsScreen';
+import { ProfileScreen } from '../screens/mainScreens/ProfileScreen';
 
 const AuthStack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -31,8 +30,8 @@ export const useRoute = isAuth => {
         backBehavior="history"
       >
         <BottomTab.Screen
-          name="Posts"
-          component={PostsScreen}
+          name="Home"
+          component={Home}
           options={{
             tabBarIcon: ({ focused, color, size }) => (
               <Feather
@@ -41,16 +40,7 @@ export const useRoute = isAuth => {
                 color={focused ? '#FF6C00' : color}
               />
             ),
-            headerRight: props => (
-              <TouchableOpacity
-                style={{ marginRight: 16 }}
-                onPress={() => {
-                  console.log('qwe');
-                }}
-              >
-                <Feather name="log-out" size={24} color="#BDBDBD" />
-              </TouchableOpacity>
-            ),
+            headerShown: false,
           }}
         />
         <BottomTab.Screen
@@ -71,12 +61,7 @@ export const useRoute = isAuth => {
                   style={{ marginLeft: 16 }}
                   onPress={() => navigation.goBack()}
                 >
-                  <Feather
-                    style={{ marginLeft: 16 }}
-                    name="arrow-left"
-                    size={24}
-                    color="rgba(33, 33, 33, 0.8)"
-                  />
+                  <Feather name="arrow-left" size={24} color="#BDBDBD" />
                 </TouchableOpacity>
               );
             },

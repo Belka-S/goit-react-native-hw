@@ -4,9 +4,9 @@ import { TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
 
-const backgroundImage = require('../assets/img/background-main-1x.jpg');
-const userPhoto = require('../assets/img/user.jpg');
-import { POSTS } from '../services/data';
+const backgroundImage = require('../../assets/img/background-main-1x.jpg');
+const userPhoto = require('../../assets/img/user.jpg');
+import { POSTS } from '../../services/data';
 
 export const ProfileScreen = () => {
   const [posts, setPosts] = useState(POSTS);

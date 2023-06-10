@@ -5,12 +5,14 @@ import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
+import * as Location from 'expo-location';
 
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
-import { fix } from '../services/constants';
+import { fix } from '../../services/constants';
+import { addWeeks } from 'date-fns';
 
 const initialFormValue = { title: '', location: '' };
 
@@ -24,12 +26,31 @@ export const CreatePostsScreen = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [cameraType, setCameraType] = useState(CameraType.back);
 
+  const [locationCoords, setLocationCoords] = useState(null);
+
+  // Keyboard
   const hideKeyboard = () => {
     setOnFocus('');
     setIsKeyboard(false);
     Keyboard.dismiss();
   };
 
+  // Location
+  useEffect(() => {
+    async function request() {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+      setLocationCoords({ latitude, longitude });
+    }
+    request();
+  }, []);
+
+  // Camera
   useEffect(() => {
     async function request() {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -39,20 +60,21 @@ export const CreatePostsScreen = ({ navigation }) => {
     request();
   }, []);
 
-  const toggleCameraType = () =>
-    setCameraType(cameraType === 'front' ? 'back' : 'front');
-
   const takeImage = async () => {
     const image = await cameraRef.takePictureAsync();
-    await MediaLibrary.createAssetAsync(image.uri);
     setImage(image.uri);
+
+    await MediaLibrary.createAssetAsync(image.uri);
   };
 
   const sendImage = () => {
-    navigation.navigate('Posts', { image, title, location });
+    navigation.navigate('Posts', { image, locationCoords, title, location });
     setFormValue(initialFormValue);
     hideKeyboard();
   };
+
+  const toggleCameraType = () =>
+    setCameraType(cameraType === 'front' ? 'back' : 'front');
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>

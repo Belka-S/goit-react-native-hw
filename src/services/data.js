@@ -6,6 +6,7 @@ export const POSTS = [
     likes: 7,
     comments: 5,
     location: 'Ukraine',
+    locationCoords: { latitude: 37.78825, longitude: -122.4324 },
   },
   {
     id: '4116-jfk5-43rh',
@@ -14,6 +15,7 @@ export const POSTS = [
     likes: 14,
     comments: 2,
     location: 'Ukraine',
+    locationCoords: { latitude: 37.78825, longitude: -122.4324 },
   },
   {
     id: 'LG16-ant5-0J25',
@@ -22,6 +24,7 @@ export const POSTS = [
     likes: 5,
     comments: 12,
     location: 'Italy',
+    locationCoords: { latitude: 37.78825, longitude: -122.4324 },
   },
 ];
 
