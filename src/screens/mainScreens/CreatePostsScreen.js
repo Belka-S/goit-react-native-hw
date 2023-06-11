@@ -190,6 +190,7 @@ export const CreatePostsScreen = ({ navigation }) => {
         <TouchableOpacity
           style={{
             ...styles.trashBtn,
+            marginBottom: Platform.OS === 'ios' ? 30 : 10,
             backgroundColor: image ? '#FF6C00' : '#F6F6F6',
           }}
           onPress={() => setImage(null)}
@@ -306,7 +307,6 @@ const styles = StyleSheet.create({
 
   // Footer
   trashBtn: {
-    marginBottom: 35,
     width: 70,
     height: 40,
     alignSelf: 'center',

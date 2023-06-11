@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import { RegistrationScreen } from '../screens/authScreens/RegistrationScreen';
@@ -21,9 +21,10 @@ export const useRoute = isAuth => {
         screenOptions={{
           tabBarShowLabel: false,
           tabBarStyle: {
-            paddingTop: 10,
-            paddingBottom: 35,
             paddingHorizontal: 55,
+            paddingTop: 10,
+            paddingBottom: Platform.OS === 'ios' ? 30 : 10,
+            height: Platform.OS === 'ios' ? 80 : 60,
           },
           headerTitleAlign: 'center',
         }}
@@ -109,10 +110,10 @@ export const useRoute = isAuth => {
 const styles = StyleSheet.create({
   createPost: {
     width: 70,
-    height: 40,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 25,
+    borderRadius: 20,
     backgroundColor: '#FF6C00',
   },
 });
