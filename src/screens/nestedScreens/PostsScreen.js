@@ -20,7 +20,7 @@ export const PostsScreen = ({ navigation, route }) => {
       title: route.params.title,
       likes: 0,
       comments: 0,
-      location: route.params.location,
+      address: route.params.address,
       locationCoords: route.params.locationCoords,
     };
 
@@ -59,7 +59,7 @@ export const PostsScreen = ({ navigation, route }) => {
                 onPress={() => navigation.navigate('Map', { item })}
               >
                 <Feather name="map-pin" size={20} color="#BDBDBD" />
-                <Text style={styles.location}>{item.location}</Text>
+                <Text style={styles.location}>{item.address}</Text>
               </TouchableOpacity>
             </View>
           </View>

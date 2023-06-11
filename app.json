@@ -25,6 +25,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-  }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
+  },
+  "ios.config.googleMapsApiKey": "AIzaSyBdzGNN7qo1CLDjDUXKYiZZXWqJ21YcmxA"
 }

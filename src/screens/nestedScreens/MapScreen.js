@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 export const MapScreen = ({ route }) => {
   const [coords, setCoords] = useState({});
@@ -17,6 +17,7 @@ export const MapScreen = ({ route }) => {
       <MapView
         style={{ flex: 1 }}
         region={{ ...coords, latitudeDelta: 0.1, longitudeDelta: 0.05 }}
+        provider={PROVIDER_GOOGLE}
       >
         <Marker title="Image" coordinate={coords} description="Hello" />
       </MapView>

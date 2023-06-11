@@ -5,7 +5,7 @@ export const POSTS = [
     title: 'Forest',
     likes: 7,
     comments: 5,
-    location: 'Ukraine',
+    address: 'Ukraine',
     locationCoords: { latitude: 37.78825, longitude: -122.4324 },
   },
   {
@@ -14,7 +14,7 @@ export const POSTS = [
     title: 'Sunset',
     likes: 14,
     comments: 2,
-    location: 'Ukraine',
+    address: 'Ukraine',
     locationCoords: { latitude: 37.78825, longitude: -122.4324 },
   },
   {
@@ -23,7 +23,7 @@ export const POSTS = [
     title: 'Old House',
     likes: 5,
     comments: 12,
-    location: 'Italy',
+    address: 'Italy',
     locationCoords: { latitude: 37.78825, longitude: -122.4324 },
   },
 ];

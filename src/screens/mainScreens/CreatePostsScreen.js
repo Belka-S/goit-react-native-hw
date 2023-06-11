@@ -12,12 +12,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import { fix } from '../../services/constants';
-import { addWeeks } from 'date-fns';
+import { translateText } from '../../services/translation';
 
-const initialFormValue = { title: '', location: '' };
+const initialFormValue = { title: '', address: '' };
 
 export const CreatePostsScreen = ({ navigation }) => {
-  const [{ title, location }, setFormValue] = useState(initialFormValue);
+  const [{ title, address }, setFormValue] = useState(initialFormValue);
   const [isKeyboard, setIsKeyboard] = useState(false);
   const [onFocus, setOnFocus] = useState('');
 
@@ -46,6 +46,14 @@ export const CreatePostsScreen = ({ navigation }) => {
       const location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
       setLocationCoords({ latitude, longitude });
+
+      const address = await Location.reverseGeocodeAsync(location.coords);
+      const { city, region, country } = address[0];
+
+      setFormValue({
+        title: '',
+        address: await translateText(`${city}, ${region}, ${country}`),
+      });
     }
     request();
   }, []);
@@ -64,11 +72,13 @@ export const CreatePostsScreen = ({ navigation }) => {
     const image = await cameraRef.takePictureAsync();
     setImage(image.uri);
 
+    const { latitude, longitude } = locationCoords;
+
     await MediaLibrary.createAssetAsync(image.uri);
   };
 
   const sendImage = () => {
-    navigation.navigate('Posts', { image, locationCoords, title, location });
+    navigation.navigate('Posts', { image, locationCoords, title, address });
     setFormValue(initialFormValue);
     hideKeyboard();
   };
@@ -139,10 +149,10 @@ export const CreatePostsScreen = ({ navigation }) => {
               <TextInput
                 style={{ ...styles.imageDetail, marginLeft: 5 }}
                 textContentType="location"
-                value={location}
+                value={address}
                 placeholder={
                   locationCoords
-                    ? 'Location...'
+                    ? address
                     : 'Looking for location, please wait!'
                 }
                 placeholderTextColor={locationCoords ? '#BDBDBD' : '#FF6C00'}
@@ -152,7 +162,7 @@ export const CreatePostsScreen = ({ navigation }) => {
                 }}
                 onBlur={() => hideKeyboard()}
                 onChangeText={value =>
-                  setFormValue(prevState => ({ ...prevState, location: value }))
+                  setFormValue(prevState => ({ ...prevState, address: value }))
                 }
               />
             </View>
@@ -265,7 +275,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
 
-  location: {
+  address: {
     marginLeft: 6,
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
