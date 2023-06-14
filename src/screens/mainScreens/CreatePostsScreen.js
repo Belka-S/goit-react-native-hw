@@ -77,7 +77,6 @@ export const CreatePostsScreen = ({ navigation }) => {
   const takeImage = async () => {
     const image = await cameraRef.takePictureAsync();
     setImage(image.uri);
-    // const { latitude, longitude } = locationCoords;
     await MediaLibrary.createAssetAsync(image.uri);
   };
 
@@ -109,7 +108,7 @@ export const CreatePostsScreen = ({ navigation }) => {
         title,
         address,
         locationCoords,
-        datea: 0,
+        likes: 0,
         comments: [],
         uploadDate: Date.now(),
       });
