@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Image, Platform, TextInput } from 'react-native';
+import { useSelector } from 'react-redux';
+import { TouchableOpacity, Platform, TextInput } from 'react-native';
 import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
+import { nanoid } from 'nanoid';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
+import { collection, addDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -13,20 +17,22 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { fix } from '../../services/constants';
 import { translateText } from '../../services/translation';
+import { db, storage } from '../../firebase/config';
 
 const initialFormValue = { title: '', address: '' };
 
 export const CreatePostsScreen = ({ navigation }) => {
-  const [{ title, address }, setFormValue] = useState(initialFormValue);
   const [isKeyboard, setIsKeyboard] = useState(false);
   const [onFocus, setOnFocus] = useState('');
 
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [image, setImage] = useState(null);
   const [cameraType, setCameraType] = useState(CameraType.back);
+  const [image, setImage] = useState(null);
 
   const [locationCoords, setLocationCoords] = useState(null);
+  const [{ title, address }, setFormValue] = useState(initialFormValue);
+  const { userName, userId } = useSelector(state => state.auth);
 
   // Keyboard
   const hideKeyboard = () => {
@@ -56,7 +62,7 @@ export const CreatePostsScreen = ({ navigation }) => {
       });
     }
     request();
-  }, []);
+  }, [address]);
 
   // Camera
   useEffect(() => {
@@ -71,9 +77,7 @@ export const CreatePostsScreen = ({ navigation }) => {
   const takeImage = async () => {
     const image = await cameraRef.takePictureAsync();
     setImage(image.uri);
-
-    const { latitude, longitude } = locationCoords;
-
+    // const { latitude, longitude } = locationCoords;
     await MediaLibrary.createAssetAsync(image.uri);
   };
 
@@ -81,6 +85,38 @@ export const CreatePostsScreen = ({ navigation }) => {
     navigation.navigate('Posts', { image, locationCoords, title, address });
     setFormValue(initialFormValue);
     hideKeyboard();
+  };
+
+  const uploadImageToServer = async () => {
+    const imageId = nanoid();
+    const responce = await fetch(image);
+    const file = await responce.blob();
+    const storageRef = ref(storage, `rn-image-hw/${imageId}`);
+
+    try {
+      // Upload Image
+      await uploadBytes(storageRef, file).then(data => {
+        console.log('Uploaded the blob:', data);
+      });
+      // Get imageURL
+      const imageUrl = await getDownloadURL(storageRef);
+      // Upload Post
+      const docRef = await addDoc(collection(db, 'images'), {
+        userName,
+        userId,
+        imageId,
+        imageUrl,
+        title,
+        address,
+        locationCoords,
+        likes: 0,
+        comments: [],
+      });
+      console.log('Image written with ID: ', docRef.id);
+    } catch (error) {
+      console.error('Error adding image: ', error);
+      throw error;
+    }
   };
 
   const toggleCameraType = () =>
@@ -173,6 +209,7 @@ export const CreatePostsScreen = ({ navigation }) => {
                 if (image) {
                   sendImage();
                   setImage(null);
+                  uploadImageToServer();
                   return;
                 }
                 takeImage();

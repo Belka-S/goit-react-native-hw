@@ -1,47 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-native-get-random-values';
-import { nanoid } from 'nanoid';
-import { compareAsc, format } from 'date-fns';
+// import { nanoid } from 'nanoid';
+import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
 import { TouchableOpacity, Image, Platform, TextInput } from 'react-native';
 import { SafeAreaView, ScrollView, View, StyleSheet, Text } from 'react-native';
 import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { doc, updateDoc, arrayUnion, onSnapshot } from 'firebase/firestore';
 
-import { COMMENTS } from '../../services/data';
+import { db } from '../../firebase/config';
 
-const image = require('../../assets/img/image-sunset.jpg');
-const initialComment = {
-  id: null,
-  userName: 'user-1',
-  avatar: require('../../assets/img/avatar-2.png'),
-  text: '',
-  date: null,
-};
-
-export const CommentsScreen = () => {
-  const [comment, setComment] = useState(initialComment);
+export const CommentsScreen = ({ route }) => {
+  const { postId, imageUrl } = route.params;
+  const { userName } = useSelector(state => state.auth);
   const [isKeyboard, setIsKeyboard] = useState(false);
+  const [comment, setComment] = useState('');
+  const [allComments, setAllComments] = useState([]);
+
+  useEffect(() => {
+    getCommentsFromFirestore();
+  }, []);
 
   const hideKeyboard = () => {
-    setComment(initialComment);
     setIsKeyboard(false);
     Keyboard.dismiss();
+  };
+
+  const createComment = async () => {
+    const postRef = doc(db, 'images', postId);
+    const date = Date.now();
+    const avatar = require('../../assets/img/avatar-2.png');
+
+    await updateDoc(postRef, {
+      comments: arrayUnion({ comment, userName, date, avatar }),
+    });
+  };
+
+  const getCommentsFromFirestore = () => {
+    onSnapshot(doc(db, 'images', postId), snapshot => {
+      setAllComments(snapshot.data().comments);
+    });
   };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <TouchableWithoutFeedback onPress={hideKeyboard}>
         <ScrollView style={styles.hero}>
-          <Image style={styles.image} source={image} />
-          {COMMENTS.map(el => {
-            const isOdd = COMMENTS.indexOf(el) % 2 === 0;
+          <Image style={styles.image} source={{ uri: imageUrl }} />
+          {allComments.reverse().map(el => {
+            const isOdd = allComments.indexOf(el) % 2 === 0;
             return (
               <View
                 style={{
                   flexDirection: isOdd ? 'row' : 'row-reverse',
                 }}
-                key={el.id}
+                key={el.date}
               >
                 <Image source={el.avatar} />
                 <View
@@ -53,7 +68,7 @@ export const CommentsScreen = () => {
                     borderTopRightRadius: !isOdd ? 0 : 6,
                   }}
                 >
-                  <Text style={styles.commentText}>{el.text}</Text>
+                  <Text style={styles.commentText}>{el.comment}</Text>
                   <Text style={styles.commentDate}>
                     {format(el.date, 'dd MMMM, yyyy | hh:mm')}
                   </Text>
@@ -66,7 +81,8 @@ export const CommentsScreen = () => {
       </TouchableWithoutFeedback>
 
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={styles.footer}>
           <View style={{ width: '100%' }}>
@@ -76,27 +92,21 @@ export const CommentsScreen = () => {
                 backgroundColor: isKeyboard ? '#FFFFFF' : '#F6F6F6',
                 borderColor: isKeyboard ? '#FF6C00' : '#E8E8E8',
               }}
-              textContentType="jobTitle"
-              value={comment.text}
+              textContentType="none"
+              value={comment}
               placeholder="Comment..."
               onFocus={() => {
                 setIsKeyboard(true);
               }}
-              onChangeText={value =>
-                setComment(prevState => ({
-                  ...prevState,
-                  text: value,
-                  id: nanoid(),
-                  date: Date.now(),
-                }))
-              }
+              onChangeText={value => setComment(value)}
               onBlur={() => hideKeyboard()}
             />
             <TouchableOpacity
               style={styles.commentBtn}
               onPress={() => {
-                if (comment.text === '') return;
-                COMMENTS.push(comment);
+                if (comment.length < 5) return;
+                createComment();
+                setComment('');
                 hideKeyboard();
               }}
             >
@@ -159,7 +169,6 @@ const styles = StyleSheet.create({
 
   // Footer
   footer: {
-    position: 'relative',
     paddingHorizontal: 16,
     paddingVertical: 10,
     flexDirection: 'row',

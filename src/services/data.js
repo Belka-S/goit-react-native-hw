@@ -1,7 +1,7 @@
 export const POSTS = [
   {
     id: '45k6-j54k-4jth',
-    image: require('../assets/img/image-forest.jpg'),
+    imageUrl: require('../assets/img/image-forest.jpg'),
     title: 'Forest',
     likes: 7,
     comments: 5,
@@ -10,7 +10,7 @@ export const POSTS = [
   },
   {
     id: '4116-jfk5-43rh',
-    image: require('../assets/img/image-sunset.jpg'),
+    imageUrl: require('../assets/img/image-sunset.jpg'),
     title: 'Sunset',
     likes: 14,
     comments: 2,
@@ -19,7 +19,7 @@ export const POSTS = [
   },
   {
     id: 'LG16-ant5-0J25',
-    image: require('../assets/img/image-house.jpg'),
+    imageUrl: require('../assets/img/image-house.jpg'),
     title: 'Old House',
     likes: 5,
     comments: 12,

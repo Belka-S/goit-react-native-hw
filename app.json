@@ -13,14 +13,16 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
-      "jsEngine": "jsc"
+      "supportsTablet": true
+      // React Native Debagger
+      // "jsEngine": "jsc"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      // React Native Debagger
       "jsEngine": "jsc"
     },
     "web": {
@@ -28,6 +30,7 @@
     },
     "plugins": ["expo-localization"]
   },
+  // React Native Debagger
   "jsEngine": "hermes",
   "ios.config.googleMapsApiKey": "AIzaSyBdzGNN7qo1CLDjDUXKYiZZXWqJ21YcmxA"
 }

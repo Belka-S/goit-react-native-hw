@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { TouchableOpacity, Text, Image, View } from 'react-native';
 import { StyleSheet, FlatList } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { nanoid } from 'nanoid';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 
-import { POSTS } from '../../services/data';
+import { auth, db } from '../../firebase/config';
 
 const userPhoto = require('../../assets/img/user.jpg');
 
-export const PostsScreen = ({ navigation, route }) => {
-  const [posts, setPosts] = useState(POSTS);
+export const PostsScreen = ({ navigation }) => {
+  const [posts, setPosts] = useState([]);
+
+  const getDataFromFirestore = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, 'images'));
+      const firebasePosts = snapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      // const firebasePosts = onSnapshot(collection(db, 'images'), snapshot => { setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));});
+      setPosts(firebasePosts);
+    } catch (error) {
+      throw error;
+    }
+  };
 
   useEffect(() => {
-    if (!route.params) return;
+    getDataFromFirestore();
+  }, [posts]);
 
-    const post = {
-      id: nanoid(),
-      image: { uri: route.params.image },
-      title: route.params.title,
-      likes: 0,
-      comments: 0,
-      address: route.params.address,
-      locationCoords: route.params.locationCoords,
-    };
-
-    setPosts(prevState => [...prevState, post]);
-  }, [route.params]);
+  const { email } = auth.currentUser;
+  const { userName } = useSelector(state => state.auth);
 
   return (
     <View style={styles.hero}>
       <View style={styles.userContainer}>
         <Image style={styles.userPhoto} source={userPhoto} />
         <View>
-          <Text style={styles.userName}>Natali Shevchenko</Text>
-          <Text style={styles.userEmail}>sheva@mail.com</Text>
+          <Text style={styles.userName}>{userName}</Text>
+          <Text style={styles.userEmail}>{email}</Text>
         </View>
       </View>
 
@@ -42,16 +48,21 @@ export const PostsScreen = ({ navigation, route }) => {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={{ marginBottom: 32, paddingHorizontal: 16 }}>
-            <Image style={styles.image} source={item.image} />
+            <Image style={styles.image} source={{ uri: item.imageUrl }} />
             <Text style={styles.imageTitle}>{item.title}</Text>
 
             <View style={styles.detailContainer}>
               <TouchableOpacity
                 style={styles.detail}
-                onPress={() => navigation.navigate('Comments')}
+                onPress={() =>
+                  navigation.navigate('Comments', {
+                    postId: item.id,
+                    imageUrl: item.imageUrl,
+                  })
+                }
               >
                 <Feather name="message-circle" size={20} color="#BDBDBD" />
-                <Text style={styles.comments}>{item.comments}</Text>
+                <Text style={styles.comments}>{item.comments.length}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity

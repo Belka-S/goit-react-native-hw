@@ -11,6 +11,8 @@ import { Home } from '../screens/mainScreens/Home';
 import { CreatePostsScreen } from '../screens/mainScreens/CreatePostsScreen';
 import { ProfileScreen } from '../screens/mainScreens/ProfileScreen';
 
+// import { PostsScreen } from '../screens/nestedScreens/PostsScreen';
+
 const AuthStack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -42,6 +44,7 @@ export const useRoute = isAuth => {
               />
             ),
             headerShown: false,
+            // tabBarStyle: { display: 'none' },
           }}
         />
         <BottomTab.Screen
@@ -98,11 +101,11 @@ export const useRoute = isAuth => {
         component={LoginScreen}
         options={{ headerShown: false }}
       />
-      <AuthStack.Screen
+      {/* <AuthStack.Screen
         name="Home"
         component={PostsScreen}
         // options={{ headerShown: false }}
-      />
+      /> */}
     </AuthStack.Navigator>
   );
 };

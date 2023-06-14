@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { View, Text, Image, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { StyleSheet, Keyboard } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
+import { authSignUp } from '../../redux/auth/authOperations';
 import { fix } from '../../services/constants';
 
 const backgroundImage = require('../../assets/img/background-main-1x.jpg');
@@ -16,6 +18,8 @@ export const RegistrationScreen = ({ navigation }) => {
   const [formValue, setFormValue] = useState(initialFormValue);
   const [isHidden, setIsHidden] = useState(true);
   const [onFocus, setOnFocus] = useState('');
+
+  const dispatch = useDispatch();
 
   const hideKeyboard = () => {
     setIsKeyboard(false);
@@ -125,8 +129,8 @@ export const RegistrationScreen = ({ navigation }) => {
               style={styles.button}
               onPress={() => {
                 hideKeyboard();
+                dispatch(authSignUp(formValue));
                 setFormValue(initialFormValue);
-                navigation.navigate('Home');
               }}
             >
               <Text style={styles.buttonText}>Register</Text>

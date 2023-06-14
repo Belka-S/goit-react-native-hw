@@ -1,18 +1,43 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Image, ImageBackground } from 'react-native';
 import { TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 
 import { Feather } from '@expo/vector-icons';
+import { authSignOut } from '../../redux/auth/authOperations';
+import { auth, db } from '../../firebase/config';
 
 const backgroundImage = require('../../assets/img/background-main-1x.jpg');
 const userPhoto = require('../../assets/img/user.jpg');
 import { POSTS } from '../../services/data';
 
-export const ProfileScreen = () => {
-  const [posts, setPosts] = useState(POSTS);
+export const ProfileScreen = ({ navigation }) => {
+  const [userPosts, setUserPosts] = useState([]);
+  const dispatch = useDispatch();
+  const { userId } = useSelector(state => state.auth);
+  const { displayName } = auth.currentUser;
+
+  useEffect(() => {
+    getUserPosts();
+    console.log(userPosts);
+  }, []);
+
+  const getUserPosts = () => {
+    onSnapshot(
+      query(collection(db, 'images'), where('userId', '==', userId)),
+      snapshot => {
+        setUserPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      }
+    );
+  };
 
   return (
-    <ImageBackground source={backgroundImage} resizeMode="cover">
+    <ImageBackground
+      source={backgroundImage}
+      resizeMode="cover"
+      style={styles.background}
+    >
       <ScrollView>
         <View style={styles.hero}>
           <View style={styles.userPhotoContainer}>
@@ -26,32 +51,48 @@ export const ProfileScreen = () => {
               <Feather name="x" size={20} color="#E8E8E8" />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.logOut}>
+          <TouchableOpacity
+            style={styles.logOut}
+            onPress={() => {
+              dispatch(authSignOut());
+            }}
+          >
             <Feather name="log-out" size={24} color="#BDBDBD" />
           </TouchableOpacity>
-          <Text style={styles.titleText}>Natali Shevchenko</Text>
+          <Text style={styles.titleText}>{displayName}</Text>
 
-          {posts.map(el => (
-            <View style={{ marginBottom: 32 }} key={el.id}>
-              <Image style={styles.image} source={el.image} />
+          {userPosts.map(el => (
+            <View style={{ marginBottom: 32, width: '100%' }} key={el.id}>
+              <Image style={styles.image} source={{ uri: el.imageUrl }} />
               <Text style={styles.imageTitle}>{el.title}</Text>
               <View style={styles.detailContainer}>
                 <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
-                    style={{ ...styles.detail, marginRight: 24 }}
+                    style={{ ...styles.detail, marginRight: 12 }}
+                    onPress={() =>
+                      navigation.navigate('Comments', {
+                        postId: el.id,
+                        imageUrl: el.imageUrl,
+                      })
+                    }
                   >
                     <Feather name="message-circle" size={20} color="#FF6C00" />
-                    <Text style={styles.comments}>{el.comments}</Text>
+                    <Text style={styles.comments}>{el.comments.length}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.detail}>
                     <Feather name="thumbs-up" size={20} color="#FF6C00" />
-                    <Text style={styles.comments}>{el.comments}</Text>
+                    <Text style={styles.comments}>
+                      {el.likes ? el.likes.length : 0}
+                    </Text>
                   </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={styles.detail}>
+                <TouchableOpacity
+                  style={styles.detail}
+                  onPress={() => navigation.navigate('Map', { item: el })}
+                >
                   <Feather name="map-pin" size={20} color="#BDBDBD" />
-                  <Text style={styles.location}>{el.location}</Text>
+                  <Text style={styles.location}>{el.address}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -63,6 +104,7 @@ export const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  background: { flex: 1, alignItems: 'flex-end', flexDirection: 'row' },
   // Hero
   hero: {
     marginTop: 140,
@@ -101,11 +143,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-  logOut: {
-    position: 'absolute',
-    top: 22,
-    right: 16,
-  },
+  logOut: { position: 'absolute', top: 22, right: 16 },
 
   titleText: {
     marginBottom: 32,
@@ -149,37 +187,5 @@ const styles = StyleSheet.create({
     color: '#212121',
     textDecorationLine: 'underline',
     textDecorationColor: '#212121',
-  },
-
-  // Footer
-  footer: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    paddingBottom: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E8E8E8',
-  },
-
-  addBtn: {
-    marginLeft: 40,
-    marginRight: 40,
-    width: 70,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    backgroundColor: '#FF6C00',
-  },
-
-  // Common
-  shadow: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 0.5,
   },
 });
