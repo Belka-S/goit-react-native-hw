@@ -44,7 +44,7 @@ export const PostsScreen = ({ navigation }) => {
       </View>
 
       <FlatList
-        data={posts.reverse()}
+        data={posts.sort((a, b) => b.uploadDate - a.uploadDate)}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={{ marginBottom: 32, paddingHorizontal: 16 }}>

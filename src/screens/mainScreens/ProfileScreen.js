@@ -61,42 +61,48 @@ export const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           <Text style={styles.titleText}>{displayName}</Text>
 
-          {userPosts.map(el => (
-            <View style={{ marginBottom: 32, width: '100%' }} key={el.id}>
-              <Image style={styles.image} source={{ uri: el.imageUrl }} />
-              <Text style={styles.imageTitle}>{el.title}</Text>
-              <View style={styles.detailContainer}>
-                <View style={{ flexDirection: 'row' }}>
+          {userPosts
+            .sort((a, b) => b.uploadDate - a.uploadDate)
+            .map(el => (
+              <View style={{ marginBottom: 32, width: '100%' }} key={el.id}>
+                <Image style={styles.image} source={{ uri: el.imageUrl }} />
+                <Text style={styles.imageTitle}>{el.title}</Text>
+                <View style={styles.detailContainer}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity
+                      style={{ ...styles.detail, marginRight: 12 }}
+                      onPress={() =>
+                        navigation.navigate('Comments', {
+                          postId: el.id,
+                          imageUrl: el.imageUrl,
+                        })
+                      }
+                    >
+                      <Feather
+                        name="message-circle"
+                        size={20}
+                        color="#FF6C00"
+                      />
+                      <Text style={styles.comments}>{el.comments.length}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.detail}>
+                      <Feather name="thumbs-up" size={20} color="#FF6C00" />
+                      <Text style={styles.comments}>
+                        {el.likes ? el.likes.length : 0}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
                   <TouchableOpacity
-                    style={{ ...styles.detail, marginRight: 12 }}
-                    onPress={() =>
-                      navigation.navigate('Comments', {
-                        postId: el.id,
-                        imageUrl: el.imageUrl,
-                      })
-                    }
+                    style={styles.detail}
+                    onPress={() => navigation.navigate('Map', { item: el })}
                   >
-                    <Feather name="message-circle" size={20} color="#FF6C00" />
-                    <Text style={styles.comments}>{el.comments.length}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.detail}>
-                    <Feather name="thumbs-up" size={20} color="#FF6C00" />
-                    <Text style={styles.comments}>
-                      {el.likes ? el.likes.length : 0}
-                    </Text>
+                    <Feather name="map-pin" size={20} color="#BDBDBD" />
+                    <Text style={styles.location}>{el.address}</Text>
                   </TouchableOpacity>
                 </View>
-
-                <TouchableOpacity
-                  style={styles.detail}
-                  onPress={() => navigation.navigate('Map', { item: el })}
-                >
-                  <Feather name="map-pin" size={20} color="#BDBDBD" />
-                  <Text style={styles.location}>{el.address}</Text>
-                </TouchableOpacity>
               </View>
-            </View>
-          ))}
+            ))}
         </View>
       </ScrollView>
     </ImageBackground>

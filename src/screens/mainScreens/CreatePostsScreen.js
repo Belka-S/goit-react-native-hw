@@ -109,8 +109,9 @@ export const CreatePostsScreen = ({ navigation }) => {
         title,
         address,
         locationCoords,
-        likes: 0,
+        datea: 0,
         comments: [],
+        uploadDate: Date.now(),
       });
       console.log('Image written with ID: ', docRef.id);
     } catch (error) {
