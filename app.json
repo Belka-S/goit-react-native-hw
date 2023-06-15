@@ -14,23 +14,24 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
-      // React Native Debagger
-      // "jsEngine": "jsc"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
-      // React Native Debagger
-      // "jsEngine": "jsc"
+      },
+      "package": "com.fpmip.goitreactnativehw"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-localization"]
+    "plugins": ["expo-localization"],
+    "extra": {
+      "eas": {
+        // "projectId": "a29a663c-6930-4093-8887-05e800b41d4e"
+      }
+    }
   },
-  // React Native Debagger
   "jsEngine": "hermes",
   "ios.config.googleMapsApiKey": "AIzaSyBdzGNN7qo1CLDjDUXKYiZZXWqJ21YcmxA"
 }
